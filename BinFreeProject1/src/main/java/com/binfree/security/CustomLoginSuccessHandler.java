@@ -7,12 +7,15 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.binfree.mapper.UsersMapper;
+import com.binfree.domain.UsersVO;
 import com.binfree.service.UsersService;
 
 import lombok.extern.log4j.Log4j;
@@ -35,11 +38,29 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		log.warn("ROLE NAMES: " + roleNames);
 		
 		if (roleNames.contains("ROLE_ADMIN")) {
+
+			UserDetails loginUserVO = (UserDetails)auth.getPrincipal();
+			String email = loginUserVO.getUsername();
+			
+			UsersVO loginUserInfo = new UsersVO();
+			loginUserInfo = usersService.getLoginUserInfo(email);
+			
+			HttpSession session = request.getSession(true);
+			
+			session.setAttribute("loginUserInfo", loginUserInfo);
+			
 			response.sendRedirect("/");
 			return;
 		}
 		
 		if (roleNames.contains("ROLE_MEMBER")) {
+			UserDetails loginUserVO = (UserDetails)auth.getPrincipal();
+			String email = loginUserVO.getUsername();
+			
+			UsersVO loginUserInfo = new UsersVO();
+			loginUserInfo = usersService.getLoginUserInfo(email);
+			HttpSession session = request.getSession(true);
+			session.setAttribute("loginUserInfo", loginUserInfo);
 			System.out.println(request.getParameter("email"));
 			//usersService.getLoginUserInfo(request.getParameter("email"));
 			response.sendRedirect("/");

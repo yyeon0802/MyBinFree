@@ -66,9 +66,8 @@
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_MEMBER')">
             <li class="nav-item">
-            	<input type="hidden" id="hiddenEmail" value="${email }"/>
-              <!-- <a class="nav-link page-scroll" href="user/mypage">님 마이페이지</a> -->
-               <a class="nav-link page-scroll" href="user/mypage?eamil=${email }"><sec:authentication property="principal.username"/>님 마이페이지</a>
+              <!-- <a class="nav-link page-scroll" href="user/mypage ?eamil=${email } "> 님 마이페이지</a> -->
+               <a class="nav-link page-scroll" href="user/mypage"><sec:authentication property="principal.username"/>님 마이페이지</a>
             </li>
             <li class="nav-item">
               <a class="nav-link page-scroll" href="/">로그아웃</a>

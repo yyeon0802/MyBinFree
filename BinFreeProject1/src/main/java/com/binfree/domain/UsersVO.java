@@ -16,8 +16,8 @@ public class UsersVO {
 	private String zipCode;
 	private String loc;
 	private String inputLoc;
-	private Date subStart;
-	private Date subEnd;
+	private String subStart;
+	private String subEnd;
 	private String check;
 	private boolean enabled;
 	private List<AuthVO> authList;

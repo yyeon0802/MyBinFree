@@ -17,4 +17,12 @@ public interface UsersService {
 	
 	public UsersVO getLoginUserInfo(String email);
 	
+	public void setModifyUserInfo(UsersVO modifyUserInfo);
+
+	public void setModifyPwd(String getPwd);
+	
+	public void setModifySubInfo(UsersVO modifySubInfo);
+	
+	public void byeUser(String email);
+	
 }

@@ -16,4 +16,13 @@ public interface UsersMapper {
 	public void insertUserAuth(UsersVO user) ;
 	
 	public UsersVO getLoginUserInfo(String email);
+	
+	public void setModifyUserInfo(UsersVO modifyUserInfo);
+	
+	public void setModifySubInfo(UsersVO modifySubInfo);
+
+	public void setModifyPwd(String getPwd);
+	
+	public void byeUser(String email);
+	
 }

@@ -25,22 +25,15 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
-//	@Setter(onMethod_=@Autowired)
-//	private UsersMapper mapper;
-
-//	@Override
-//	public void register(UsersVO user) {
-//		log.info("register....."+user);
-//		return;
-
-//	@Setter(onMethod_=@Autowired)
 
 	@Autowired
-	UsersMapper usersMapper;
+	private UsersMapper usersMapper;
 	
-	
-	HttpSession session;
-	//HttpServletRequest servletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+	/*
+	 * @Resource(name = "loginUserVO")
+	 * 
+	 * @Lazy private UsersVO loginUserVO;
+	 */
 	
 	@Override
 	public void userJoin(UsersVO user) throws Exception {
@@ -57,9 +50,9 @@ public class UsersServiceImpl implements UsersService {
 		
 		System.out.println("usersServiceImple 진입 : " + email);
 		
-		UsersVO user = new UsersVO();
-		user = usersMapper.getLoginUserInfo(email);		
-		System.out.println("usersServiceImple에서 userMapper 호출  : " + user);
+		UsersVO loginUserInfo = new UsersVO();
+		loginUserInfo = usersMapper.getLoginUserInfo(email);
+		System.out.println("usersServiceImple에서 userMapper 호출  : " + loginUserInfo);
 		
 		/*
 		 * session.setAttribute("email", user.getEmail()); System.out.println("셋 세션");
@@ -71,9 +64,37 @@ public class UsersServiceImpl implements UsersService {
 		 * user.getInputLoc());
 		 */
 		
-		return user;
+		return loginUserInfo;
+	}
+	
+
+	@Override
+	public void setModifyUserInfo(UsersVO modifyUserInfo) {
+
+		usersMapper.setModifyUserInfo(modifyUserInfo);
 	}
 
+	@Override
+	public void setModifyPwd(String getPwd) {
+		usersMapper.setModifyPwd(getPwd);
+	}
+
+	@Override
+	public void setModifySubInfo(UsersVO modifySubInfo) {
+
+		usersMapper.setModifySubInfo(modifySubInfo);
+	}
+
+	@Override
+	public void byeUser(String email) {
+
+		usersMapper.byeUser(email);
+	}
+
+	
+	
+
+	
 	/*
 	 * @Override public void getLoginUserInfo(String email, HttpSession session) {
 	 * 

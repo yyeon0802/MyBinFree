@@ -2,11 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+	
+  <meta name="_csrf" content="${_csrf.token}"/>	
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
+  
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -118,8 +123,46 @@ function findAddress() {
 
 <script>
 
-function modify_subInfo() {
+function modify_userInfo(){
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	var email = $('#email').val();
+	var phone = $('#phone').val();
+	
+	console.log(email);
+	console.log(phone);
+	console.log(password);
 			
+	$.ajax({
+		
+		type: 'post',
+		url:'/user/modify_userInfo',
+		beforeSend : function(xhr)
+        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+			xhr.setRequestHeader(header, token);
+        },
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({'email' : email, 'phone' : phone}),
+		dataType: 'text',
+		success: function(){
+			alert("수정되었습니다.");
+			location.replace("/");	
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+
+
+function modify_subInfo() {
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
 	var name = $('#sub_name').val();
 	var phone = $('#sub_phone').val();
 	var zipCode = $('#zipCode').val();
@@ -129,6 +172,9 @@ function modify_subInfo() {
 	$.ajax({
 		type: 'post',
 		url: '/user/modify_subInfo',
+		beforeSend : function(xhr) {   
+			xhr.setRequestHeader(header, token);
+        },
 		contentType : "application/json; charset=UTF-8",
 		dataType: 'text',
 		data: JSON.stringify({'name' : name, 'phone' : phone, 'zipCode' : zipCode, 'loc' : loc, 'inputLoc' : inputLoc}),
@@ -141,7 +187,41 @@ function modify_subInfo() {
 }  
 
 
+function modify_pwd() {
+	 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	 
+	var password = $('#pwd').val();
+	
+	$.ajax({
+		
+		type: 'post',
+		url:'/user/modify_pwd',
+		beforeSend : function(xhr)
+        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+			xhr.setRequestHeader(header, token);
+        },
+		contentType : "application/json; charset=UTF-8",
+		data : password,
+		dataType: 'text',
+		success: function(){
+			alert("수정되었습니다.");
+			location.replace("/");	
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+	 
+		
+ }
+
+
  function bye_user() {
+	 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
 	 
 	 var email = $('#email').val();
 	 
@@ -149,6 +229,9 @@ function modify_subInfo() {
 		 $.ajax({			
 			 type: 'post',
 			 url: '/user/bye_user',
+			 beforeSend : function(xhr) {   
+					xhr.setRequestHeader(header, token);
+		      },
 			 contentType : 'application/json; charset=UTF-8',
 			 dataType: 'text',
 			 data: email,
@@ -160,8 +243,7 @@ function modify_subInfo() {
 	 }else {
 		 window.opener.location.reload();
 		 self.close();
-	 }
-	 
+	 }	 
 	 
  }
  </script>
@@ -202,7 +284,7 @@ function modify_subInfo() {
   </header>
   <!-- Header Section End -->
 
-  <!-- Mypage Section Start -->
+  <!-- Mypage Section Start -->    
   <section id="tabs">
     <div class="container">
       <h6 class="section-title h1">&nbsp</h6>
@@ -218,56 +300,57 @@ function modify_subInfo() {
             </div>
           </nav>
           <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-          <!-- myinfo Start -->
             <div class="tab-pane fade show active" id="nav-myinfo" role="tabpanel" aria-labelledby="nav-home-tab">
-
-              <div class="col-md-12" id="myinfo">
-                <!--border-right--> 
-                <div class="p-3 py-5">
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h6 class="text-right">내 정보</h6>
+              <div class="row">
+                <!-- myinfo Start -->
+                <div class="col-md-7 border-right" id="myinfo">
+                  <!--border-right-->
+                  <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h6 class="text-right">내 정보</h6>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-md-12"><label class="labels">이름</label><input type="text" class="form-control"
+                          value="${name }" readonly="true"/></div>
+                      <div class="col-md-12"><label class="labels">전화번호</label><input type="text" class="form-control"
+                          id="phone" value="${phone }"/></div>
+                      <div class="col-md-12"><label class="labels">이메일 ID</label><input type="text" class="form-control"
+                          id="email" value="${email}" readonly="true"/></div>
+                    </div>
+                    <div class="mt-5 text-center">
+                      <button class="btn btn-common btn-effect" id="userinfo_submit" onclick="modify_userInfo()">내 정보 수정</button>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <button class="btn btn-common btn-effect" id="submit" onclick="bye_user()"> 회원 탈퇴 </button>
+                    </div>
                   </div>
-                  <%-- <form:form action="modify_userInfo" method="post" modelAttribute="modifyUserInfoVO"> --%>
-                  <div class="row mt-2">
-                    <%-- <div class="col-md-12"><form:label path="name" class="labels">이름</form:label><form:input path="name" type="text" class="form-control"
-                        value="${loginUserVO.name}" readonly="true"/></div> --%>
-                    <div class="col-md-12"><label class="labels">이름</label><input type="text" class="form-control"
-                        value="${name}" readonly="true"/></div>
-					<%--  <div class="col-md-12"><form:label path="phone" class="labels">전화번호</form:label><form:input path="phone" type="text" class="form-control"
-                        value="${loginUserVO.phone}"/></div> --%>
-                    <div class="col-md-12"><label class="labels">전화번호</label><input path="phone" type="text" class="form-control"
-                        value="${phone}"/></div>
-					<%--  <div class="col-md-12"><form:label path="email" class="labels">이메일 ID</form:label><form:input path="email" id="email" type="text" class="form-control"
-                        value="${loginUserVO.email}" readonly="true"/></div> --%>
-                    <div class="col-md-12"><label class="labels">이메일 ID</label><input id="email" type="text" class="form-control"
-                        value="${email}" readonly="true"/></div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h6 class="text-right">비밀번호</h6>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-md-12"><label class="labels">현재 비밀번호</label><input type="password"
+                          class="form-control" value="${password }" readonly="true" /></div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-md-12"><label class="labels">수정할 비밀번호</label><input type="button" id="sbutton" value="보이기" class="button" />
+                      <input type="password" class="form-control" id="pwd" value="" placeholder="현재 비밀번호는 암호화 되어 있습니다."></div>
+                    </div>
                   </div>
-                  <div class="row mt-3">
-				<%--  <div class="col-md-6"><label class="labels">현재 비밀번호</label><form:input type="password"
-                        path="" class="form-control" value="${loginUserVO.password}" disabled="true"/></div> --%>
-                    <div class="col-md-6"><label class="labels">현재 비밀번호</label><input type="password"
-                        class="form-control" value="${password}" disabled="true"/></div>
-                   <%--  <div class="col-md-6"><form:label path="password" class="labels">수정할 비밀번호</form:label><input type="button" id="sbutton" value="보이기" class="button" /><form:input type="password"
-                       path="password" class="form-control" value="${loginUserVO.password}" id="pwd" /></div>
-                  </div> --%>
-                    <div class="col-md-6"><label class="labels">수정할 비밀번호</label><input type="button" id="sbutton" value="보이기" class="button" /><input type="password"
-                        class="form-control" value="${password}" id="pwd" /></div>
-                  </div>
-                  <div class="mt-5 text-center">
-                    <button class="btn btn-common btn-effect" id="submit">내 정보 수정</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 <%-- </form:form> --%>
-                    <button class="btn btn-common btn-effect" id="submit" type="submit" onclick="bye_user()"> 회원 탈퇴 </button>
+                  <div class="mt-2 text-center">
+                    <button class="btn btn-common btn-effect" id="submit_pwd" onclick="modify_pwd()" >비밀번호 수정</button>                    
                   </div>
                 </div>
               </div>
             </div>
-          <!-- myinfo End -->
-            
+            <!-- myinfo End -->
+           
           <!-- subinfo Start -->
             <div class="tab-pane fade" id="nav-subinfo" role="tabpanel" aria-labelledby="nav-profile-tab">
               <div class="row">
               <c:choose>
-              	<c:when test="${loginUserVO.zipCode == null}">
+              	<c:when test="${zipCode == null}">
               		<div class="container">
 				        <div class="row">          
 				          <div class="col-md-12">
@@ -292,16 +375,15 @@ function modify_subInfo() {
                     <div class="d-flex justify-content-between align-items-center mb-3">
                       <h6 class="text-right">구독 정보</h6>
                     </div>
-                    <%-- <form:form action="modify_subInfo" method="post" modelAttribut="modifySubInfoVO"> --%>
                     <div class="row mt-2">
                       <div class="col-md-6"><label class="labels">구독 시작</label>
-                      <input path="name" type="text" class="form-control" value="${loginUserVO.subStart }" readonly="true"/></div>
+                      <input path="name" type="text" class="form-control" value="${subStart}" readonly="true"/></div>
                       <div class="col-md-6"><label class="labels">구독 종료</label>
-                      <input type="text" class="form-control" value="${loginUserVO.subEnd }" readonly="true"/></div>
+                      <input type="text" class="form-control" value="${subEnd }" readonly="true"/></div>
                       <div class="col-md-6"><label class="labels">구독자</label><input id="sub_name" type="text" class="form-control"
-                          value="${loginUserVO.name }"/></div>
+                          value="${name }"/></div>
                       <div class="col-md-6"><label class="labels">구독자 연락처</label><input id="sub_phone" type="text" class="form-control"
-                           value="${loginUserVO.phone }"/></div>
+                           value="${phone }"/></div>
                     </div>
                     <br><br>
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -309,17 +391,17 @@ function modify_subInfo() {
                     </div>
                     <div class="row mt-2">
                       <div class="col-md-6"><label class="labels">우편번호</label><input type="text" class="form-control"
-                        id="zipCode" value="${loginUserVO.zipCode }" readonly="true"/></div>
-                      <div class="col-md-6"><button class="btn btn-common btn-effect btn-loc"  onclick="findAddress()" id="submit" style="margin-top: 29px;">
+                        id="zipCode" value="${zipCode }" readonly="true"/></div>
+                      <div class="col-md-6"><button class="btn btn-common btn-effect btn-loc" onclick="findAddress()" id="submit" style="margin-top: 29px;">
                        	 주소 찾기</button></div>
                       <div class="col-md-12"><label class="labels">기본 주소</label><input type="text" class="form-control"
-                         id="loc" value="${loginUserVO.loc }" readonly="true" /></div>
+                         id="loc" value="${loc }" readonly="true" /></div>
                       <div class="col-md-12"><label class="labels">상세 주소</label><input type="text" class="form-control"
-                       id="inputLoc" value="${loginUserVO.inputLoc }"/></div>
+                       id="inputLoc" value="${inputLoc }"/></div>
                     </div>
                     <div class="mt-5 text-center">
                       <button class="btn btn-common btn-effect" id="sub_submit" onclick="modify_subInfo()">구독 정보 수정</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <button class="btn btn-common btn-effect" id="submit" type="submit">구독 취소</button>
+                      <button class="btn btn-common btn-effect" id="submit" >구독 취소</button>
                     </div>
                   </div>
                   <%-- </form:form> --%>

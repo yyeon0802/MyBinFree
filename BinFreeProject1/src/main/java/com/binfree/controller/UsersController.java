@@ -1,23 +1,27 @@
 package com.binfree.controller;
 
-import javax.annotation.Resource;
+import java.util.Map;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.binfree.domain.UsersVO;
 import com.binfree.service.UsersService;
@@ -28,6 +32,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @RequestMapping("/user/*")
 public class UsersController {
+	
 	@Setter(onMethod_ = @Autowired)
 	private PasswordEncoder pwencoder;
 	
@@ -57,7 +62,17 @@ public class UsersController {
 	}
 	
 	@GetMapping("/logins")
-	public String logins() {
+	public String logins(HttpSession session) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		UserDetails loginUserVO = (UserDetails)authentication.getPrincipal();
+		String email = loginUserVO.getUsername();
+		
+		UsersVO loginUserInfo = new UsersVO();
+		loginUserInfo = usersService.getLoginUserInfo(email);
+		
+		session.setAttribute("loginUserInfo", loginUserInfo);
+		
 		return "user/login";
 	}
 	
@@ -86,23 +101,112 @@ public class UsersController {
 
 	
 	@GetMapping("/mypage")
-	public void goMypage() {
+	public ModelAndView goMypage(HttpSession session) {
 		
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		//UserDetails loginUserVO = (UserDetails)authentication.getPrincipal();
+		//String email = loginUserVO.getUsername();
+		
+		//UsersVO loginUserInfo = new UsersVO();
+		//loginUserInfo = usersService.getLoginUserInfo(email);
+		
+		UsersVO loginUserInfo = (UsersVO)session.getAttribute("loginUserInfo");
+
+		log.info("userInfo : " + loginUserInfo);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user/mypage");
+		mv.addObject("email", loginUserInfo.getEmail());
+		mv.addObject("name", loginUserInfo.getName());
+		mv.addObject("phone", loginUserInfo.getPhone());
+		mv.addObject("password", loginUserInfo.getPassword());
+		mv.addObject("subStart", loginUserInfo.getSubStart());
+		mv.addObject("subEnd", loginUserInfo.getSubEnd());
+		mv.addObject("zipCode", loginUserInfo.getZipCode());
+		mv.addObject("loc", loginUserInfo.getLoc());
+		mv.addObject("inputLoc", loginUserInfo.getInputLoc());
+		
+		return mv;
+	
+		/*
+		 * Object principal =
+		 * SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		 */
 		//System.out.println(principal.toString().);
-		String email;
-		if(principal instanceof UsersVO) {
-			email = ((UsersVO)principal).getEmail();
-		} else {
-			email = principal.toString();
-		}
+		/*
+		 * String email; if(principal instanceof UsersVO) { email =
+		 * ((UsersVO)principal).getEmail(); System.out.println("mypageController if 진입"
+		 * + email); } else { email = principal.toString();
+		 * System.out.println("mypageController else 진입" + email); }	 */
+	}
+	
+	@ResponseBody
+	@PostMapping("/modify_userInfo")
+	public void modifyUserInfo(@RequestBody Map<String, String> paramMap) {
 		
-		System.out.println("mypageController 진입" + email);
+		UsersVO modifyUserInfo = new UsersVO();
+		
+		String password = paramMap.get("password");
+		password = pwencoder.encode(password);
+		
+		modifyUserInfo.setEmail(paramMap.get("email"));
+		modifyUserInfo.setPhone(paramMap.get("phone"));
+		modifyUserInfo.setPassword(password);
+		
+		usersService.setModifyUserInfo(modifyUserInfo);
+	}
 		
 		
+	@ResponseBody
+	@PostMapping("/modify_subInfo")
+	public void modifySubInfo(@RequestBody Map<String, String> paramMap, HttpServletRequest request) { 
+		HttpSession session = request.getSession();
+ 
+		UsersVO loginUserInfo = (UsersVO)session.getAttribute("loginUserInfo");
+		
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		
+//		UserDetails loginUserVO = (UserDetails)authentication.getPrincipal();
+//		String email = loginUserVO.getUsername();
+		
+		UsersVO modifySubInfo = new UsersVO();
+		
+		modifySubInfo.setEmail(loginUserInfo.getEmail());
+		modifySubInfo.setName(paramMap.get("name"));
+		modifySubInfo.setPhone(paramMap.get("phone"));			
+		modifySubInfo.setZipCode(paramMap.get("zipCode"));
+		modifySubInfo.setLoc(paramMap.get("loc"));
+		modifySubInfo.setInputLoc(paramMap.get("inputLoc"));
+		
+		System.out.println(modifySubInfo);
+		
+		usersService.setModifySubInfo(modifySubInfo);
 		
 	}
-
+	
+	@ResponseBody
+	@PostMapping("/modify_pwd")
+	public void modifyPwd(@RequestBody String getPwd, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UsersVO loginUserInfo = (UsersVO)session.getAttribute("loginUserInfo");
+		
+		UsersVO modifyPwd = new UsersVO();
+		
+		String password = pwencoder.encode(getPwd);
+		modifyPwd.setEmail(loginUserInfo.getEmail());
+		modifyPwd.setPassword(password);
+		
+	}
+		
+	@ResponseBody
+	@PostMapping("/bye_user")
+	public void byeUser(@RequestBody String getEmail) {
+		System.out.println(getEmail);
+		usersService.byeUser(getEmail);
+		SecurityContextHolder.clearContext();
+	}
 	
 	
 }
