@@ -7,12 +7,12 @@
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
 		
-	<bean id="customAccessDenied" class="com.binfree.security.CustomAccessDeniedHandler"></bean>
-	<bean id="customLoginSuccess" class="com.binfree.security.CustomLoginSuccessHandler"></bean>
+	<bean id="customAccessDenied" class="com.binfree.web.user.security.CustomAccessDeniedHandler"></bean>
+	<bean id="customLoginSuccess" class="com.binfree.web.user.security.CustomLoginSuccessHandler"></bean>
 	<!-- <bean id="customPasswordEncoder" class="com.binfree.security.CustomNoOpPasswordEncoder"></bean> -->
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-	<bean id="customUserDetailsService" class="com.binfree.security.CustomUserDetailsService"></bean>
-	<bean id="usersService" class="com.binfree.service.UsersServiceImpl"></bean>
+	<bean id="customUserDetailsService" class="com.binfree.web.user.security.CustomUserDetailsService"></bean>
+	<bean id="usersServiceImpl" class="com.binfree.web.user.service.UsersServiceImpl"></bean>
 	<security:http>
 	
 		<security:intercept-url pattern="/sample/all" access="permitAll" />

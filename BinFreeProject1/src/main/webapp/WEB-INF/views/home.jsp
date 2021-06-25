@@ -38,7 +38,7 @@
 </head>
 
 <body>
-  <!-- Header Section Start -->
+  <%-- <!-- Header Section Start -->
   <header id="slider-area">
     <nav class="navbar navbar-expand-md fixed-top scrolling-navbar bg-white">
       <div class="container">
@@ -84,7 +84,10 @@
           </ul>
         </div>
       </div>
-    </nav>
+    </nav> --%>
+    
+     <!-- Header Section Start -->
+  <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     <!-- Main Carousel Section -->
     <div id="carousel-area" style="max-width:100%; height: auto;">

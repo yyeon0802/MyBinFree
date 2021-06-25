@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.binfree.web.user.mapper.UsersMapper">
+	
+	<insert id="userJoin">
+  		insert into USERS values(#{id}, #{email}, #{password}, #{name}, #{phone}, #{zipCode}, #{loc}, #{inputLoc}, now(), now(), #{check}, #{enabled} );
+
+  	</insert>
+	<insert id="insertUserAuth">
+	 	insert into USERS_auth(email,auth) values( #{email}, "ROLE_MEMBER");
+	</insert>
+	
+   <resultMap type="com.binfree.web.user.domain.UsersVO" id="usersMap">
+      <id property="id" column="id" />
+      <result property="id" column="id" />
+      <result property="email" column="email" />
+      <result property="password" column="password" />
+      <result property="name" column="name" />
+      <result property="phone" column="phone" />
+      <result property="zipCode" column="zipCode" />
+      <result property="loc" column="loc" />
+      <result property="inputLoc" column="inputLoc" />
+      <result property="subStart" column="subStart" />
+      <result property="subEnd" column="subEnd" />
+      <result property="check" column="check" />
+      <collection property="authList" resultMap="authMap">
+      </collection>
+   </resultMap>
+
+	<resultMap type="com.binfree.web.user.domain.UsersVO" id="usersMap2">
+      <id property="id" column="id" />
+      <result property="id" column="id" />
+      <result property="email" column="email" />
+      <result property="password" column="password" />
+      <result property="name" column="name" />
+      <result property="phone" column="phone" />
+      <result property="zipCode" column="zipCode" />
+      <result property="loc" column="loc" />
+      <result property="inputLoc" column="inputLoc" />
+      <result property="subStart" column="subStart" />
+      <result property="subEnd" column="subEnd" />
+   </resultMap>
+
+   <resultMap type="com.binfree.web.user.domain.AuthVO" id="authMap">
+      <result property="id" column="id" />
+      <result property="email" column="email" />
+      <result property="auth" column="auth" />
+   </resultMap>
+
+   <select id="read" resultMap="usersMap">
+	   	<![CDATA[
+		   SELECT user.id, 
+		   user.email , 
+		   user.password , 
+		   user.name, user.phone, 
+		   user.zipCode, user.loc, 
+		   user.inputLoc, 
+		   user.subStart, 
+		   user.subEnd, 
+		   user.check, 
+		   auth.auth
+		   FROM bfree.USERS user LEFT OUTER JOIN bfree.USERS_auth auth on user.email = auth.email
+		    WHERE user.email = #{email};
+	   	]]>
+   </select>
+
+   <select id="getLoginUserInfo" parameterType="string" resultMap="usersMap2">
+		<![CDATA[
+			SELECT id, email, password, name, phone, zipCode, loc, inputLoc, date_format(subStart, '%Y-%m-%d') as subStart, date_format(subEnd, '%Y-%m-%d') as subEnd
+			FROM USERS
+			WHERE email = #{email}		
+		]]>
+	</select>
+
+	<select id="setModifyUserInfo" parameterType="com.binfree.web.user.domain.UsersVO" resultType="com.binfree.web.user.domain.UsersVO">
+		<![CDATA[
+			UPDATE USERS 
+			SET phone = #{phone} 
+			WHERE email = #{email}
+		]]>
+	</select>
+	
+	<select id="setModifyPwd" parameterType="String" resultType="com.binfree.web.user.domain.UsersVO">
+		<![CDATA[
+			UPDATE USERS 
+			SET password = #{password} 
+			WHERE email = #{email}
+		]]>
+	</select>
+	
+	<select id="setModifySubInfo" parameterType="com.binfree.web.user.domain.UsersVO" resultType="com.binfree.web.user.domain.UsersVO">
+		<![CDATA[
+			UPDATE USERS 
+			SET name = #{name}, phone = #{phone}, zipCode = #{zipCode}, loc = #{loc}, inputLoc = #{inputLoc}
+			WHERE email = #{email}
+		]]>
+	</select>
+	
+	<select id="byeUser" parameterType="String" resultType="String">
+		<![CDATA[
+			DELETE FROM USERS 
+			WHERE email = #{email}
+		]]>
+	</select>
+	
+
+</mapper>

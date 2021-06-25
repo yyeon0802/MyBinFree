@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.binfree.domain.UsersVO;
+import com.binfree.web.user.domain.UsersVO;
+import com.binfree.web.user.mapper.UsersMapper;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

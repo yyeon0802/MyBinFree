@@ -21,7 +21,22 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.binfree.controller" />
-	<context:component-scan base-package="com.binfree.service" />
+	<context:component-scan base-package="com.binfree.web.user.controller" />
+	<context:component-scan base-package="com.binfree.web.user.service" />
+	
+	<!-- <context:component-scan base-package="com.binfree.web.review.controller" />
+	<context:component-scan base-package="com.binfree.web.buddy.controller" />
+
+	<context:component-scan base-package="com.binfree.web.user.service"></context:component-scan>
+	<context:component-scan base-package="com.binfree.web.review.service"></context:component-scan>
+	<context:component-scan base-package="com.binfree.web.buddy.service"></context:component-scan>
+		
+	<context:component-scan base-package="com.binfree.web.user.mapper"></context:component-scan>
+	<context:component-scan base-package="com.binfree.web.review.mapper"></context:component-scan>
+	<context:component-scan base-package="com.binfree.web.buddy.mapper"></context:component-scan>
+	 -->
+	
+	<!-- <context:component-scan base-package="com.binfree.controller" />
+	<context:component-scan base-package="com.binfree.service" /> -->
 	
 </beans:beans>

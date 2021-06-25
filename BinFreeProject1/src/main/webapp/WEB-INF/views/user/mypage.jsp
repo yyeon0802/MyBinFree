@@ -8,7 +8,8 @@
 <html lang="en">
 
 <head>
-	
+
+<!-- security token -->	
   <meta name="_csrf" content="${_csrf.token}"/>	
   <meta name="_csrf_header" content="${_csrf.headerName}"/>
   
@@ -33,6 +34,121 @@
   <link rel="stylesheet" href="/resources/css/main.css">
   <link rel="stylesheet" href="/resources/css/responsive.css">
   <link rel="stylesheet" href="/resources/css/mypage.css">
+  
+  <style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap')
+	;
+
+.cross {
+	padding: 10px;
+	color: #1abc9c;;
+	cursor: pointer;
+	font-size: 23px
+}
+
+.cross i {
+	margin-top: -5px;
+	cursor: pointer
+}
+
+.comment-box {
+	padding: 5px
+}
+
+.comment-area textarea {
+	resize: none;
+	border: 1px solid #1abc9c;
+}
+
+.form-control:focus {
+	color: #495057;
+	background-color: #fff;
+	border-color: #ffffff;
+	outline: 0;
+	box-shadow: 0 0 0 1px #1abc9c !important
+}
+
+.send {
+	color: #fff;
+	background-color: #1abc9c;
+	border-color: #1abc9c;
+}
+
+.send:hover {
+	color: #fff;
+	background-color: #1abc9c;
+	border-color: #1abc9c;
+}
+
+.rating {
+	display: inline-flex;
+	margin-top: -10px;
+	flex-direction: row-reverse
+}
+
+.rating>input {
+	display: none
+}
+
+.rating>label {
+	position: relative;
+	width: 28px;
+	font-size: 35px;
+	color: #1abc9c;
+	cursor: pointer
+}
+
+.rating>label::before {
+	content: "\2605";
+	position: absolute;
+	opacity: 0
+}
+
+.rating>label:hover:before, .rating>label:hover ~label:before {
+	opacity: 1 !important
+}
+
+.rating>input:checked ~label:before {
+	opacity: 1
+}
+
+.rating:hover>input:checked ~label:before {
+	opacity: 0.4
+}
+
+.starR1 {
+	background:
+		url('http://miuu227.godohosting.com/images/icon/ico_review.png')
+		no-repeat -52px 0;
+	background-size: auto 100%;
+	width: 15px;
+	height: 30px;
+	float: left;
+	text-indent: -9999px;
+	cursor: pointer;
+}
+
+.starR2 {
+	background:
+		url('http://miuu227.godohosting.com/images/icon/ico_review.png')
+		no-repeat right 0;
+	background-size: auto 100%;
+	width: 15px;
+	height: 30px;
+	float: left;
+	text-indent: -9999px;
+	cursor: pointer;
+}
+
+.starR1.on {
+	background-position: 0 0;
+}
+
+.starR2.on {
+	background-position: -15px 0;
+}
+</style>
 	
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   
@@ -132,8 +248,7 @@ function modify_userInfo(){
 	var phone = $('#phone').val();
 	
 	console.log(email);
-	console.log(phone);
-	console.log(password);
+	console.log(phone);	
 			
 	$.ajax({
 		
@@ -180,7 +295,8 @@ function modify_subInfo() {
 		data: JSON.stringify({'name' : name, 'phone' : phone, 'zipCode' : zipCode, 'loc' : loc, 'inputLoc' : inputLoc}),
 		success: function() {
 			alert("수정되었습니다.");
-			location.replace("/");			
+			location.replace("/");
+			console.log("리플레이스??");
 		},
 		error: function(e){console.log(e);}
 	});
@@ -208,6 +324,8 @@ function modify_pwd() {
 		success: function(){
 			alert("수정되었습니다.");
 			location.replace("/");	
+			console.log("리플레이스??");
+
 		},
 		error:function(e){
 			console.log(e);
@@ -254,35 +372,8 @@ function modify_pwd() {
 
 <body>
   <!-- Header Section Start -->
-  <header id="slider-area">
-    <nav class="navbar navbar-expand-md fixed-top scrolling-navbar bg-white">
-      <div class="container">
-        <a class="navbar-brand" href="home.html"><span><img src="/resources/img/logo.png"></span></a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="lni-menu"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto w-100 justify-content-end">
-            <li class="nav-item">
-              <a class="nav-link page-scroll" href="friends.html">구독</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link page-scroll" href="buddy.html">구인</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link page-scroll" href="service.html">고객센터</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link page-scroll" href="">로그인</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-  <!-- Header Section End -->
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+	<!-- Header Section End -->
 
   <!-- Mypage Section Start -->    
   <section id="tabs">
@@ -401,11 +492,63 @@ function modify_pwd() {
                     </div>
                     <div class="mt-5 text-center">
                       <button class="btn btn-common btn-effect" id="sub_submit" onclick="modify_subInfo()">구독 정보 수정</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <button class="btn btn-common btn-effect" id="submit" >구독 취소</button>
+                      <button type="button" class="btn btn-common" data-toggle="modal" data-target="#form">구독 리뷰 작성</button>
                     </div>
                   </div>
                   <%-- </form:form> --%>
                 </div>
+                
+                <div class="modal fade" id="form" tabindex="-1" role="dialog"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											role="document">
+											<div class="modal-content">
+												<div class="text-right cross">
+													<i class="fa fa-times mr-2" data-dismiss="modal"></i>
+												</div>
+												<div class="card-body text-center">
+													<img src="/resources/img/good.jpg" height="100" width="100">
+													<div class="comment-box text-center">
+														<p style="font-size: 25px; padding: 20px;">서비스에
+															만족하셨나요?</p>
+														<form method="post" id="insert-form">
+															<input type="hidden" id="email"
+																value="${loginUserVO.email}" /> <input type="hidden"
+																id="userName" value="${loginUserVO.name}" /> <input
+																type="hidden" id="subItem" value="${loginUserVO.subEnd}" />
+															<input type="hidden" id="star" />
+															<div class="rating">
+																<input type="radio" name="star" value="5" id="5"><label
+																	for="5">☆</label> <input type="radio" name="star"
+																	value="4" id="4"> <label for="4">☆</label> <input
+																	type="radio" name="star" value="3" id="3"> <label
+																	for="3">☆</label> <input type="radio" name="star"
+																	value="2" id="2"> <label for="2">☆</label> <input
+																	type="radio" name="star" value="1" id="1"> <label
+																	for="1">☆</label>
+															</div>
+															<div class="comment-area">
+																<textarea class="form-control" id="contents"
+																	name="contents" placeholder="리뷰를 작성해주세요." rows="4"></textarea>
+															</div>
+															<div class="text-center mt-4">
+																<button name="subBtn" type="button"
+																	class="btn btn-success send px-4" onclick="insert();">
+																	작성 완료 <i class="fa fa-long-arrow-right ml-1"></i>
+																</button>
+																<button name="subBtn" type="button"
+																	class="btn btn-success send px-4" data-dismiss="modal">
+																	취소 <i class="fa fa-long-arrow-right ml-1"></i>
+																</button>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+                
+                
 		<!-- mybuddyinfo Start -->	
                 <div class="col-md-4">
                   <div class="p-3 py-5">
@@ -438,100 +581,49 @@ function modify_pwd() {
 
 
   <!-- Footer Section Start -->
-  <footer>
-    <!-- Footer Area Start -->
-    <section class="footer-Content">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="widget">
-              <br>
-              <h3 class="block-title">Bin-Free</h3>
-              <ul class="contact-footer">
-                <li>
-                  <span>상호명 : 비트캠프 D풀이 | 사업자 등록번호 : 123-45-67890</span>
-                  <span>통신판매업 신고번호 : 2021-서울서초-0524</span>
-                  <span>대표자 : D풀이 | 소재지 : 서울특별시 서초구 강남대로 459(백암빌딩 구관)</span>
-                  <span>문의 : bitcamp@test.com</span>
-                </li>
-                <li>
-                  <span>Copyright©2021 BFree. All rights reserved.</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Footer area End -->
-
-    <!-- Copyright Start  -->
-    <div id="copyright">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="site-info float-left">
-              <p>Crafted by <a href="#" rel="nofollow">D풀이</a></p>
-            </div>
-            <div class="float-right">
-              <ul class="nav nav-inline">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">이용안내</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">사업자정보확인</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">이용약관</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">개인정보처리방침</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Copyright End -->
-  </footer>
-  <!-- Footer Section End -->
-
-  <!-- Go To Top Link -->
-  <a href="#" class="back-to-top">
-    <i class="lni-arrow-up"></i>
-  </a>
-
-  <div id="loader">
-    <div class="spinner">
-      <div class="double-bounce1"></div>
-      <div class="double-bounce2"></div>
-    </div>
-  </div>
-
-  <!-- jQuery first, then Tether, then Bootstrap JS. -->
-  <script src="/resources/js/jquery-min.js"></script>
-  <script src="/resources/js/popper.min.js"></script>
-  <script src="/resources/js/bootstrap.min.js"></script>
-  <script src="/resources/js/classie.js"></script>
-  <script src="/resources/js/color-switcher.js"></script>
-  <script src="/resources/js/jquery.mixitup.js"></script>
-  <script src="/resources/js/nivo-lightbox.js"></script>
-  <script src="/resources/js/owl.carousel.js"></script>
-  <script src="/resources/js/jquery.stellar.min.js"></script>
-  <script src="/resources/js/jquery.nav.js"></script>
-  <script src="/resources/js/scrolling-nav.js"></script>
-  <script src="/resources/js/jquery.easing.min.js"></script>
-  <script src="/resources/js/wow.js"></script>
-  <script src="/resources/js/jquery.vide.js"></script>
-  <script src="/resources/js/jquery.counterup.min.js"></script>
-  <script src="/resources/js/jquery.magnific-popup.min.js"></script>
-  <script src="/resources/js/waypoints.min.js"></script>
-  <script src="/resources/js/form-validator.min.js"></script>
-  <script src="/resources/js/contact-form-script.js"></script>
-  <script src="/resources/js/main.js"></script>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 
+	<script type="text/javascript" src="/resources/js/review.js"></script>
+	<script>
+	
+	function insert() {
+		$('input[name="star"]').each(function() {
+	        if($(this).prop('checked')) {
+	            $('#star').val(this.value);
+	        }
+	    });
+		var email = $('#email').val();
+		var star = $('#star').val();
+		var contents = $('#contents').val();
+		var userName = $('#userName').val();
+		var subItem = $('#subItem').val();
+		console.log(contents);
+		$.ajax({
+			url: "/review/insert",
+			method:"post",
+			data: {'email': email, 'star' : star, 'contents' : contents, 'userName':userName, 'subItem':subItem},
+			dataType: 'text',
+			success: function(data){
+				alert("리뷰 등록이 완료되었습니다!");
+				$('#modal').modal('hide');
+				window.location.href='/review/subscribe';
+			}
+		});
+	}
+	
+	$(document).ready(function() {
+			console.log(${list});
+		});
+		$('.starRev span').click(function() {
+			$(this).parent().children('span').removeClass('on');
+			$(this).addClass('on').prevAll('span').addClass('on');
+			$('#star').val(this.value);
+			return false;
+		});
+		 $('#modal').modal("hide");
+		    
+	</script>
 </body>
 
 </html>
