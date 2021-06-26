@@ -15,6 +15,8 @@ public interface UsersMapper {
 
 	public void insertUserAuth(UsersVO user) ;
 	
+	public UsersVO getEmail(UsersVO user);
+	
 	public UsersVO getLoginUserInfo(String email);
 	
 	public void setModifyUserInfo(UsersVO modifyUserInfo);

@@ -15,6 +15,8 @@ public interface UsersService {
 	
 	public void insertUserAuth(UsersVO user) throws Exception;
 	
+	public UsersVO getEmail(UsersVO user);
+	
 	public UsersVO getLoginUserInfo(String email);
 	
 	public void setModifyUserInfo(UsersVO modifyUserInfo);

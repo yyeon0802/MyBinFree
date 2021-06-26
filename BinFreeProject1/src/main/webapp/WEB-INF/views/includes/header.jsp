@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.binfree.web.user.domain.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<% 
+	UsersVO user = (UsersVO)session.getAttribute("loginUserInfo"); //session에 있는 정보를 받아온다. 
+%>   
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,7 +61,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto w-100 justify-content-end">
             <li class="nav-item">
-              <a class="nav-link page-scroll" href="friends.html">구독</a>
+              <a class="nav-link page-scroll" href="/review/subscribe">구독</a>
             </li>
             <li class="nav-item">
               <a class="nav-link page-scroll" href="buddy.html">구인</a>
@@ -70,8 +76,7 @@
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_MEMBER')">
             <li class="nav-item">
-              <!-- <a class="nav-link page-scroll" href="user/mypage ?eamil=${email } "> 님 마이페이지</a> -->
-               <a class="nav-link page-scroll" href="user/mypage"><sec:authentication property="principal.username"/>님 마이페이지</a>
+               <a class="nav-link page-scroll" href="user/mypage"><%=user.getName()%>님 마이페이지</a>
             </li>
             <li class="nav-item">
               <a class="nav-link page-scroll" href="/">로그아웃</a>

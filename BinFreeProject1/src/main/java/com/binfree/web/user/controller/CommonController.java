@@ -18,7 +18,6 @@ public class CommonController {
 		model.addAttribute("msg", "Access Denied");
 	}
 	
-	/*
 	@GetMapping("/user/login")   //********************
 	public void loginInput(String error, String logout, Model model) {
 		log.info("error: " + error);
@@ -31,7 +30,7 @@ public class CommonController {
 		if(logout != null) {
 			model.addAttribute("logout", "로그아웃 되었습니다!");
 		}
-	} */
+	}
 	
 	@GetMapping("/user/signups")
 	public void signupInput() {

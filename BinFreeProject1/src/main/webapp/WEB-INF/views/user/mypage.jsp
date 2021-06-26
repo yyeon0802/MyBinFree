@@ -262,7 +262,7 @@ function modify_userInfo(){
 		data : JSON.stringify({'email' : email, 'phone' : phone}),
 		dataType: 'text',
 		success: function(){
-			alert("수정되었습니다.");
+			alert("회원정보 수정이 완료 되었습니다.");
 			location.replace("/");	
 		},
 		error:function(e){
@@ -278,8 +278,8 @@ function modify_subInfo() {
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	
-	var name = $('#sub_name').val();
-	var phone = $('#sub_phone').val();
+	var subName = $('#sub_name').val();
+	var subPhone = $('#sub_phone').val();
 	var zipCode = $('#zipCode').val();
 	var loc = $('#loc').val();
 	var inputLoc = $('#inputLoc').val(); 			
@@ -292,9 +292,9 @@ function modify_subInfo() {
         },
 		contentType : "application/json; charset=UTF-8",
 		dataType: 'text',
-		data: JSON.stringify({'name' : name, 'phone' : phone, 'zipCode' : zipCode, 'loc' : loc, 'inputLoc' : inputLoc}),
+		data: JSON.stringify({'subName' : subName, 'subPhone' : subPhone, 'zipCode' : zipCode, 'loc' : loc, 'inputLoc' : inputLoc}),
 		success: function() {
-			alert("수정되었습니다.");
+			alert("구독정보 수정이 완료 되었습니다.");
 			location.replace("/");
 			console.log("리플레이스??");
 		},
@@ -322,7 +322,7 @@ function modify_pwd() {
 		data : password,
 		dataType: 'text',
 		success: function(){
-			alert("수정되었습니다.");
+			alert("비밀번호 수정이 완료 되었습니다.");
 			location.replace("/");	
 			console.log("리플레이스??");
 
@@ -403,7 +403,7 @@ function modify_pwd() {
                     <div class="row mt-2">
                       <div class="col-md-12"><label class="labels">이름</label><input type="text" class="form-control"
                           value="${name }" readonly="true"/></div>
-                      <div class="col-md-12"><label class="labels">전화번호</label><input type="text" class="form-control"
+                      <div class="col-md-12"><label class="labels">전화번호</label><input type="text" class="form-control phoneNumber"
                           id="phone" value="${phone }"/></div>
                       <div class="col-md-12"><label class="labels">이메일 ID</label><input type="text" class="form-control"
                           id="email" value="${email}" readonly="true"/></div>
@@ -467,14 +467,16 @@ function modify_pwd() {
                       <h6 class="text-right">구독 정보</h6>
                     </div>
                     <div class="row mt-2">
+                      <div class="col-md-8"><label class="labels">구독 상품</label>
+                      <input type="text" class="form-control" value="" disabled /></div>
                       <div class="col-md-6"><label class="labels">구독 시작</label>
-                      <input path="name" type="text" class="form-control" value="${subStart}" readonly="true"/></div>
+                      <input type="text" class="form-control" value="${subStart}" readonly="true"/></div>
                       <div class="col-md-6"><label class="labels">구독 종료</label>
                       <input type="text" class="form-control" value="${subEnd }" readonly="true"/></div>
                       <div class="col-md-6"><label class="labels">구독자</label><input id="sub_name" type="text" class="form-control"
-                          value="${name }"/></div>
-                      <div class="col-md-6"><label class="labels">구독자 연락처</label><input id="sub_phone" type="text" class="form-control"
-                           value="${phone }"/></div>
+                          value="${subName }"/></div>
+                      <div class="col-md-6"><label class="labels">구독자 연락처</label><input id="sub_phone" type="text" class="form-control phoneNumber"
+                           value="${subPhone }"/></div>
                     </div>
                     <br><br>
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -495,59 +497,47 @@ function modify_pwd() {
                       <button type="button" class="btn btn-common" data-toggle="modal" data-target="#form">구독 리뷰 작성</button>
                     </div>
                   </div>
-                  <%-- </form:form> --%>
                 </div>
                 
-                <div class="modal fade" id="form" tabindex="-1" role="dialog"
-										aria-labelledby="exampleModalLabel" aria-hidden="true">
-										<div class="modal-dialog modal-dialog-centered"
-											role="document">
-											<div class="modal-content">
-												<div class="text-right cross">
-													<i class="fa fa-times mr-2" data-dismiss="modal"></i>
+                <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="text-right cross">
+								<i class="fa fa-times mr-2" data-dismiss="modal"></i>
+							</div>
+							<div class="card-body text-center">
+								<img src="/resources/img/good.jpg" height="100" width="100">
+									<div class="comment-box text-center">
+										<p style="font-size: 25px; padding: 20px;">서비스에 만족하셨나요?</p>
+											<form method="post" id="insert-form">
+												<input type="hidden" id="email" value="${loginUserVO.email}" /> 
+												<input type="hidden" id="userName" value="${loginUserVO.name}" /> 
+												<input type="hidden" id="subItem" value="${loginUserVO.subEnd}" />
+												<input type="hidden" id="star" />
+												<div class="rating">
+													<input type="radio" name="star" value="5" id="5"><label	for="5">☆</label> 
+													<input type="radio" name="star" value="4" id="4"><label for="4">☆</label> 
+													<input type="radio" name="star" value="3" id="3"><label for="3">☆</label> 
+													<input type="radio" name="star" value="2" id="2"><label for="2">☆</label> 
+													<input type="radio" name="star" value="1" id="1"><label for="1">☆</label>
 												</div>
-												<div class="card-body text-center">
-													<img src="/resources/img/good.jpg" height="100" width="100">
-													<div class="comment-box text-center">
-														<p style="font-size: 25px; padding: 20px;">서비스에
-															만족하셨나요?</p>
-														<form method="post" id="insert-form">
-															<input type="hidden" id="email"
-																value="${loginUserVO.email}" /> <input type="hidden"
-																id="userName" value="${loginUserVO.name}" /> <input
-																type="hidden" id="subItem" value="${loginUserVO.subEnd}" />
-															<input type="hidden" id="star" />
-															<div class="rating">
-																<input type="radio" name="star" value="5" id="5"><label
-																	for="5">☆</label> <input type="radio" name="star"
-																	value="4" id="4"> <label for="4">☆</label> <input
-																	type="radio" name="star" value="3" id="3"> <label
-																	for="3">☆</label> <input type="radio" name="star"
-																	value="2" id="2"> <label for="2">☆</label> <input
-																	type="radio" name="star" value="1" id="1"> <label
-																	for="1">☆</label>
-															</div>
-															<div class="comment-area">
-																<textarea class="form-control" id="contents"
-																	name="contents" placeholder="리뷰를 작성해주세요." rows="4"></textarea>
-															</div>
-															<div class="text-center mt-4">
-																<button name="subBtn" type="button"
-																	class="btn btn-success send px-4" onclick="insert();">
+												<div class="comment-area">
+													<textarea class="form-control" id="contents" name="contents" placeholder="리뷰를 작성해주세요." rows="4"></textarea>
+												</div>
+												<div class="text-center mt-4">
+													<button name="subBtn" type="button" class="btn btn-success send px-4" onclick="insert();">
 																	작성 완료 <i class="fa fa-long-arrow-right ml-1"></i>
-																</button>
-																<button name="subBtn" type="button"
-																	class="btn btn-success send px-4" data-dismiss="modal">
+													</button>
+													<button name="subBtn" type="button" class="btn btn-success send px-4" data-dismiss="modal">
 																	취소 <i class="fa fa-long-arrow-right ml-1"></i>
-																</button>
-															</div>
-														</form>
-													</div>
+													</button>
 												</div>
-											</div>
+											</form>
 										</div>
 									</div>
-                
+								</div>
+							</div>
+						</div>
                 
 		<!-- mybuddyinfo Start -->	
                 <div class="col-md-4">
@@ -613,8 +603,12 @@ function modify_pwd() {
 	}
 	
 	$(document).ready(function() {
-			console.log(${list});
-		});
+		
+		$(document).on("keyup", ".phoneNumber", function() { 
+			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+		});		
+			
+	});
 		$('.starRev span').click(function() {
 			$(this).parent().children('span').removeClass('on');
 			$(this).addClass('on').prevAll('span').addClass('on');

@@ -40,21 +40,6 @@ public class UsersController {
 	@Autowired
 	private UsersService usersService;
 
-		
-	@GetMapping("/login")   //********************
-	public void loginInput(String error, String logout, Model model) {
-		log.info("error: " + error);
-		log.info("logout: " + logout);
-		
-		if (error != null) {
-			model.addAttribute("error", "등록되지 않은 아이디나 비밀번호 입니다. 다시 입력해주세요.");
-		}
-		
-		if(logout != null) {
-			model.addAttribute("logout", "로그아웃 되었습니다!");
-		}
-	}
-	
 	@GetMapping("/logins")
 	public String logins(HttpSession session) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -70,29 +55,35 @@ public class UsersController {
 		return "user/login";
 	}
 	
-	// 회원가입
-			@RequestMapping(value="/join",method=RequestMethod.POST)
-			public String joinPOST(UsersVO user) throws Exception{
-				logger.info("join 진입");
-				
-				String password = user.getPassword();
-				password = pwencoder.encode(password);
-				user.setPassword(password);
-				
-				usersService.userJoin(user);
-				usersService.insertUserAuth(user);
-				
-				
-				logger.info("join service 성공");
-				return "redirect:/";
-			}
-			
 		
 	@GetMapping("/signup")
 	public String signup() {
 		return "user/signup";
 	}
 
+	// 회원가입
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	public String joinPOST(UsersVO user, Model model) throws Exception {
+
+		logger.info("join 진입");
+		
+		if(usersService.getEmail(user) == null) {
+			
+			String password = user.getPassword();
+			password = pwencoder.encode(password);
+			user.setPassword(password);
+	
+			usersService.userJoin(user);
+			usersService.insertUserAuth(user);
+	
+			logger.info("join service 성공");
+			return "redirect:/";
+		} else {
+			model.addAttribute("msg", "이미 존재하는 아이디입니다.");
+			return "user/signup";
+		}
+	}
+		
 	
 	@GetMapping("/mypage")
 	public ModelAndView goMypage(HttpSession session) {
@@ -120,12 +111,16 @@ public class UsersController {
 		mv.addObject("name", getUserInfo.getName());
 		mv.addObject("phone", getUserInfo.getPhone());
 		mv.addObject("password", getUserInfo.getPassword());
+		mv.addObject("subName", getUserInfo.getSubName());
+		mv.addObject("subItem", getUserInfo.getSubItem());
+		mv.addObject("subPhone", getUserInfo.getSubPhone());
 		mv.addObject("subStart", getUserInfo.getSubStart());
 		mv.addObject("subEnd", getUserInfo.getSubEnd());
 		mv.addObject("zipCode", getUserInfo.getZipCode());
 		mv.addObject("loc", getUserInfo.getLoc());
 		mv.addObject("inputLoc", getUserInfo.getInputLoc());
-		
+		mv.addObject("myBuddy", getUserInfo.getMyBuddy());
+
 		log.info("mypage mv : " + mv);
 		
 		return mv;
@@ -174,8 +169,8 @@ public class UsersController {
 		UsersVO modifySubInfo = new UsersVO();
 		
 		modifySubInfo.setEmail(loginUserInfo.getEmail());
-		modifySubInfo.setName(paramMap.get("name"));
-		modifySubInfo.setPhone(paramMap.get("phone"));			
+		modifySubInfo.setSubName(paramMap.get("subName"));
+		modifySubInfo.setSubPhone(paramMap.get("subPhone"));			
 		modifySubInfo.setZipCode(paramMap.get("zipCode"));
 		modifySubInfo.setLoc(paramMap.get("loc"));
 		modifySubInfo.setInputLoc(paramMap.get("inputLoc"));

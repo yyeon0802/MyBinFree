@@ -75,26 +75,26 @@
   </div>
 
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
-  <script src="../resources/js/jquery-min.js"></script>
-  <script src="../resources/js/popper.min.js"></script>
-  <script src="../resources/js/bootstrap.min.js"></script>
-  <script src="../resources/js/classie.js"></script>
-  <script src="../resources/js/color-switcher.js"></script>
-  <script src="../resources/js/jquery.mixitup.js"></script>
-  <script src="../resources/js/nivo-lightbox.js"></script>
-  <script src="../resources/js/owl.carousel.js"></script>
-  <script src="../resources/js/jquery.stellar.min.js"></script>
-  <script src="../resources/js/jquery.nav.js"></script>
-  <script src="../resources/js/scrolling-nav.js"></script>
-  <script src="../resources/js/jquery.easing.min.js"></script>
-  <script src="../resources/js/wow.js"></script>
-  <script src="../resources/js/jquery.vide.js"></script>
-  <script src="../resources/js/jquery.counterup.min.js"></script>
-  <script src="../resources/js/jquery.magnific-popup.min.js"></script>
-  <script src="../resources/js/waypoints.min.js"></script>
-  <script src="../resources/js/form-validator.min.js"></script>
+  <script src="/resources/js/jquery-min.js"></script>
+  <script src="/resources/js/popper.min.js"></script>
+  <script src="/resources/js/bootstrap.min.js"></script>
+  <script src="/resources/js/classie.js"></script>
+  <script src="/resources/js/color-switcher.js"></script>
+  <script src="/resources/js/jquery.mixitup.js"></script>
+  <script src="/resources/js/nivo-lightbox.js"></script>
+  <script src="/resources/js/owl.carousel.js"></script>
+  <script src="/resources/js/jquery.stellar.min.js"></script>
+  <script src="/resources/js/jquery.nav.js"></script>
+  <script src="/resources/js/scrolling-nav.js"></script>
+  <script src="/resources/js/jquery.easing.min.js"></script>
+  <script src="/resources/js/wow.js"></script>
+  <script src="/resources/js/jquery.vide.js"></script>
+  <script src="/resources/js/jquery.counterup.min.js"></script>
+  <script src="/resources/js/jquery.magnific-popup.min.js"></script>
+  <script src="/resources/js/waypoints.min.js"></script>
+  <script src="/resources/js/form-validator.min.js"></script>
   <!-- <script src="../resources/js/contact-form-script.js"></script> -->
-  <script src="../resources/js/main.js"></script>
+  <script src="/resources/js/main.js"></script>
 
 </body>
 

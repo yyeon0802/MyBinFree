@@ -4,7 +4,7 @@
 <mapper namespace="com.binfree.web.user.mapper.UsersMapper">
 	
 	<insert id="userJoin">
-  		insert into USERS values(#{id}, #{email}, #{password}, #{name}, #{phone}, #{zipCode}, #{loc}, #{inputLoc}, now(), now(), #{check}, #{enabled} );
+  		insert into USERS values(#{id}, #{email}, #{password}, #{name}, #{phone}, #{zipCode}, #{loc}, #{inputLoc}, #{subItem}, #{subPhone}, #{subItem}, now(), now(), #{myBuddy}, #{check}, #{enabled} );
 
   	</insert>
 	<insert id="insertUserAuth">
@@ -21,8 +21,12 @@
       <result property="zipCode" column="zipCode" />
       <result property="loc" column="loc" />
       <result property="inputLoc" column="inputLoc" />
+      <result property="subName" column="subName" />
+      <result property="subPhone" column="subPhone" />
+      <result property="subItem" column="subItem" />
       <result property="subStart" column="subStart" />
       <result property="subEnd" column="subEnd" />
+      <result property="myBuddy" column="myBuddy" />
       <result property="check" column="check" />
       <collection property="authList" resultMap="authMap">
       </collection>
@@ -38,8 +42,12 @@
       <result property="zipCode" column="zipCode" />
       <result property="loc" column="loc" />
       <result property="inputLoc" column="inputLoc" />
+      <result property="subName" column="subName" />
+      <result property="subPhone" column="subPhone" />
+      <result property="subItem" column="subItem" />
       <result property="subStart" column="subStart" />
       <result property="subEnd" column="subEnd" />
+      <result property="myBuddy" column="myBuddy" />
    </resultMap>
 
    <resultMap type="com.binfree.web.user.domain.AuthVO" id="authMap">
@@ -56,8 +64,12 @@
 		   user.name, user.phone, 
 		   user.zipCode, user.loc, 
 		   user.inputLoc, 
+		   user.subName, 
+		   user.subPhone, 
+		   user.subItem, 
 		   user.subStart, 
-		   user.subEnd, 
+		   user.subEnd,
+		   user.myBuddy, 
 		   user.check, 
 		   auth.auth
 		   FROM bfree.USERS user LEFT OUTER JOIN bfree.USERS_auth auth on user.email = auth.email
@@ -65,9 +77,30 @@
 	   	]]>
    </select>
 
+	<select id="getEmail" resultMap="usersMap">
+		<![CDATA[
+			SELECT email
+			FROM bfree.USERS
+			WHERE email = #{email}; 
+		]]>
+	</select>
+
    <select id="getLoginUserInfo" parameterType="string" resultMap="usersMap2">
 		<![CDATA[
-			SELECT id, email, password, name, phone, zipCode, loc, inputLoc, date_format(subStart, '%Y-%m-%d') as subStart, date_format(subEnd, '%Y-%m-%d') as subEnd
+			SELECT id, 
+			email, 
+			password, 
+			name, 
+			phone, 
+			zipCode, 
+			loc, 
+			inputLoc, 
+			subName, 
+			subPhone, 
+			subItem, 
+			date_format(subStart, '%Y-%m-%d') as subStart, 
+			date_format(subEnd, '%Y-%m-%d') as subEnd, 
+			myBuddy
 			FROM USERS
 			WHERE email = #{email}		
 		]]>
@@ -92,7 +125,7 @@
 	<select id="setModifySubInfo" parameterType="com.binfree.web.user.domain.UsersVO" resultType="com.binfree.web.user.domain.UsersVO">
 		<![CDATA[
 			UPDATE USERS 
-			SET name = #{name}, phone = #{phone}, zipCode = #{zipCode}, loc = #{loc}, inputLoc = #{inputLoc}
+			SET subName = #{subName}, subPhone = #{subPhone}, zipCode = #{zipCode}, loc = #{loc}, inputLoc = #{inputLoc}
 			WHERE email = #{email}
 		]]>
 	</select>

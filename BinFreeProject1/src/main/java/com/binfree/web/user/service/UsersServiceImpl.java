@@ -17,24 +17,17 @@ import com.binfree.web.user.domain.AuthVO;
 import com.binfree.web.user.domain.UsersVO;
 import com.binfree.web.user.mapper.UsersMapper;
 
-import lombok.AllArgsConstructor;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
-@AllArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
 
 	@Autowired
 	private UsersMapper usersMapper;
 	
-	/*
-	 * @Resource(name = "loginUserVO")
-	 * 
-	 * @Lazy private UsersVO loginUserVO;
-	 */
+	
 	
 	@Override
 	public void userJoin(UsersVO user) throws Exception {
@@ -46,6 +39,11 @@ public class UsersServiceImpl implements UsersService {
 		usersMapper.insertUserAuth(user);
 	}
 
+	@Override
+	public UsersVO getEmail(UsersVO user) {
+		return usersMapper.getEmail(user);
+	}
+	
 	@Override
 	public UsersVO getLoginUserInfo(String email) {
 		
@@ -92,40 +90,5 @@ public class UsersServiceImpl implements UsersService {
 		usersMapper.byeUser(email);
 	}
 
-	
-	
-
-	
-	/*
-	 * @Override public void getLoginUserInfo(String email, HttpSession session) {
-	 * 
-	 * UsersVO user = new UsersVO();
-	 * 
-	 * user = usersMapper.getLoginUserInfo(email);
-	 * 
-	 * System.out.println(user);
-	 * 
-	 * session.setAttribute("email", user.getEmail());
-	 * 
-	 * 
-	 * 
-	 * private int id;
-	private String email;
-	private String password;
-	private String name;
-	private String phone;
-	private String zipCode;
-	private String loc;
-	private String inputLoc;
-	private Date subStart;
-	private Date subEnd;
-	private String check;
-	private boolean enabled;
-	private List<AuthVO> authList;
-	 * 
-	 * }
-	 */
-	
-	
 
 }
