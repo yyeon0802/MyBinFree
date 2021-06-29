@@ -94,8 +94,9 @@
 													style="color: black;">|</a> <a href="#" col
 													style="color: black;">비밀번호 찾기</a>
 											</div>
-											<button type="submit"
-												class="btn btn-common btn-effect btn-kakao">
+											<button type="button"
+												class="btn btn-common btn-effect btn-kakao" 
+												onclick="window.open('https://kauth.kakao.com/oauth/authorize?client_id=02b776f7245b5bf08b452bea56efb7a4&redirect_uri=http://localhost:9091/user/kakaologin&response_type=code')">
 												<img src="/resources/img/kakao.png" height="21px"
 													width="21px">&nbsp;카카오 로그인
 											</button>

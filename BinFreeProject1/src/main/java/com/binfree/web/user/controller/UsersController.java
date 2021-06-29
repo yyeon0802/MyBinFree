@@ -1,5 +1,6 @@
 package com.binfree.web.user.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
@@ -20,10 +21,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.binfree.web.user.domain.UsersVO;
+import com.binfree.web.user.service.KakaoAPI;
 import com.binfree.web.user.service.UsersService;
 
 import lombok.Setter;
@@ -40,6 +43,9 @@ public class UsersController {
 	@Autowired
 	private UsersService usersService;
 
+	@Autowired
+	private KakaoAPI kakao;
+	
 	@GetMapping("/logins")
 	public String logins(HttpSession session) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -205,6 +211,37 @@ public class UsersController {
 		System.out.println(getEmail);
 		usersService.byeUser(getEmail);
 		SecurityContextHolder.clearContext();
+	}
+	
+	
+	@RequestMapping(value="user/kakaologin")
+	public String login(@RequestParam("code") String code, HttpSession session) throws Exception {
+	    String access_Token = kakao.getAccessToken(code);
+	    HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
+	    System.out.println("login Controller : " + userInfo);
+	    
+	    //    클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
+	    if (userInfo.get("email") != null) {
+	        session.setAttribute("userEmail", userInfo.get("email"));
+	        session.setAttribute("access_Token", access_Token);
+	        
+	    }
+	    
+	    String email = String.valueOf(userInfo.get("email"));
+	    String name = String.valueOf(userInfo.get("nickname"));
+	    UsersVO user = new UsersVO();
+	    user.setEmail(email);
+	    user.setName(name);
+	    //user.setAuth("ROLE_MEMBER");
+	    
+	    usersService.userJoin(user);
+	    
+	    
+	    log.info("카카오세션?:" + session);
+		log.info("contorller access_Token:" + access_Token );
+		log.info("controller code : " + code);
+	    
+	    return "home";
 	}
 	
 	
