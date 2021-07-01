@@ -35,12 +35,14 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<!-- <mybatis-spring:scan base-package="com.binfree.mapper"></mybatis-spring:scan> -->
-	
 	<mybatis-spring:scan base-package="com.binfree.web.user.mapper"></mybatis-spring:scan>
-	<!-- <mybatis-spring:scan base-package="com.binfree.web.review.mapper"></mybatis-spring:scan>
-	<mybatis-spring:scan base-package="com.binfree.web.buddy.mapper"></mybatis-spring:scan> -->
-	
-	<!-- <bean class="com.binfree.domain.UsersVO" id='loginUserVO' scope="session"/> -->
+	<mybatis-spring:scan base-package="com.binfree.web.review.mapper"></mybatis-spring:scan>
+	<mybatis-spring:scan base-package="com.binfree.web.bfamily.mapper"></mybatis-spring:scan>
+	<mybatis-spring:scan base-package="com.binfree.web.buddy.mapper"></mybatis-spring:scan>
+	<mybatis-spring:scan base-package="com.binfree.web.form.mapper"></mybatis-spring:scan>
+	<mybatis-spring:scan base-package="com.binfree.web.main.mapper"></mybatis-spring:scan>
+	   
+  	<!-- <bean class="com.binfree.web.user.domain.UsersVO" id='loginUserVO' scope="session"/>  -->
+   
 	
 </beans>

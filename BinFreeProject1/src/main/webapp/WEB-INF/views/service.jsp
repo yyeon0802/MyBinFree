@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +15,7 @@
   <title>Bin-Free Homepage</title>
 
   <!-- Bootstrap CSS -->
+  <!-- css -->
   <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
   <link rel="stylesheet" href="/resources/css/line-icons.css">
   <link rel="stylesheet" href="/resources/css/owl.carousel.css">
@@ -20,48 +23,21 @@
   <link rel="stylesheet" href="/resources/css/nivo-lightbox.css">
   <link rel="stylesheet" href="/resources/css/magnific-popup.css">
   <link rel="stylesheet" href="/resources/css/animate.css">
-  <link rel="stylesheet" href="/resources/css/color-switcher.css">
   <link rel="stylesheet" href="/resources/css/menu_sideslide.css">
   <link rel="stylesheet" href="/resources/css/main.css">
   <link rel="stylesheet" href="/resources/css/responsive.css">
+
+  <script src="https://code.jquery.com/jquery-latest.js"></script>
+  <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+  <script>
+  </script>
 
 </head>
 
 <body>
   <!-- Header Section Start -->
-  <header id="slider-area">
-    <nav class="navbar navbar-expand-md fixed-top scrolling-navbar bg-white">
-      <div class="container">        
-        <a class="navbar-brand" href="home.html"><span><img src="img/logo.png"></span></a>
+  <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="lni-menu"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto w-100 justify-content-end">
-            <li class="nav-item">
-              <a class="nav-link page-scroll" href="friends.html">구독</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link page-scroll" href="buddy.html">구인</a>
-            </li>
-
-            <a class="nav-link page-scroll" href="service.html">고객센터</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link page-scroll" href="login.html">로그인</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-
-
-  </header>
-  <!-- Header Section End -->
 
 
 
@@ -217,7 +193,7 @@
             </div>
           </div>
         </div>
-        <div class="panel panel-default">
+       <!--  <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">
               <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion"
@@ -234,15 +210,15 @@
               다만, 일정 기간이 지난 후에는 취소가 불가능합니다. 더 궁금한 점은 고객센터로 문의바랍니다.
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">
               <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion"
-                href="#collapseNine">어떤 방식으로 환불이 진행되나요?</a>
+                href="#collapseEight">어떤 방식으로 환불이 진행되나요?</a>
             </h4>
           </div>
-          <div id="collapseNine" class="panel-collapse collapse">
+          <div id="collapseEight" class="panel-collapse collapse">
             <div class="panel-body">
               <strong>결제하셨던 결제 수단으로 환불이 진행됩니다.</strong>
               <br />
@@ -257,26 +233,24 @@
           <div class="panel-heading">
             <h4 class="panel-title">
               <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion"
-                href="#collapseTen">결제했던 수단 말고 다른 방법으로 환불 받을 수 있나요?</a>
+                href="#collapseNine">결제했던 수단 말고 다른 방법으로 환불 받을 수 있나요?</a>
             </h4>
           </div>
-          <div id="collapseTen" class="panel-collapse collapse">
+          <div id="collapseNine" class="panel-collapse collapse">
             <div class="panel-body">
               결제하셨던 수단으로만 환불이 가능하며, 다른 방법으로 환불은 어렵습니다.
             </div>
           </div>
         </div>
-
-
         <div class="faqHeader">구직 신청</div>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">
               <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion"
-                href="#collapseEleven">구직 신청은 어디서 하나요?</a>
+                href="#collapseTen">구직 신청은 어디서 하나요?</a>
             </h4>
           </div>
-          <div id="collapseEleven" class="panel-collapse collapse">
+          <div id="collapseTen" class="panel-collapse collapse">
             <div class="panel-body">
               <strong>상단 메뉴에 구인 탭을 통해 신청 가능합니다.</strong>
               <br />
@@ -289,10 +263,10 @@
           <div class="panel-heading">
             <h4 class="panel-title">
               <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion"
-                href="#collapseTwelv">지원서 작성 후 채용 결과는 어떻게 알 수 있나요?</a>
+                href="#collapseEleven">지원서 작성 후 채용 결과는 어떻게 알 수 있나요?</a>
             </h4>
           </div>
-          <div id="collapseTwelv" class="panel-collapse collapse">
+          <div id="collapseEleven" class="panel-collapse collapse">
             <div class="panel-body">
               <strong>지원서 확인 후 작성해주신 연락처로 2주 안에 개별연락드립니다.</strong>
               <br />
@@ -304,107 +278,11 @@
       </div>
     </div>
   </section>
-
-
   <!-- Features Section End -->
 
 
-
   <!-- Footer Section Start -->
-  <footer>
-    <!-- Footer Area Start -->
-    <section class="footer-Content">
-      <div class="container">
-        <div class="row">          
-          <div class="col-sm-12">
-            <div class="widget">
-              <br>
-              <h3 class="block-title">Bin-Free</h3>
-              <ul class="contact-footer">
-                <li>
-                  <span>상호명 : 비트캠프 D풀이 | 사업자 등록번호 : 123-45-67890</span>
-                  <span>통신판매업 신고번호 : 2021-서울서초-0524</span>
-                  <span>대표자 : D풀이 | 소재지 : 서울특별시 서초구 강남대로 459(백암빌딩 구관)</span>
-                  <span>문의 : bitcamp@test.com</span>
-                </li>
-                <li>
-                  <span>Copyright©2021 BFree. All rights reserved.</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Footer area End -->
-
-    <!-- Copyright Start  -->
-    <div id="copyright">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="site-info float-left">
-              <p>Crafted by <a href="#" rel="nofollow">D풀이</a></p>
-            </div>
-            <div class="float-right">
-              <ul class="nav nav-inline">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">이용안내</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">사업자정보확인</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">이용약관</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">개인정보처리방침</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Copyright End -->
-
-  </footer>
-  <!-- Footer Section End -->
-
-  <!-- Go To Top Link -->
-  <a href="#" class="back-to-top">
-    <i class="lni-arrow-up"></i>
-  </a>
-
-  <div id="loader">
-    <div class="spinner">
-      <div class="double-bounce1"></div>
-      <div class="double-bounce2"></div>
-    </div>
-  </div>
-
-  <!-- jQuery first, then Tether, then Bootstrap JS. -->
-  <script src="js/jquery-min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/classie.js"></script>
-  <script src="js/color-switcher.js"></script>
-  <script src="js/jquery.mixitup.js"></script>
-  <script src="js/nivo-lightbox.js"></script>
-  <script src="js/owl.carousel.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.nav.js"></script>
-  <script src="js/scrolling-nav.js"></script>
-  <script src="js/jquery.easing.min.js"></script>
-  <script src="js/wow.js"></script>
-  <script src="js/jquery.vide.js"></script>
-  <script src="js/jquery.counterup.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/waypoints.min.js"></script>
-  <script src="js/form-validator.min.js"></script>
-  <script src="js/contact-form-script.js"></script>
-  <script src="js/main.js"></script>
-
+  <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	
 </body>
-
 </html>

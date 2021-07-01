@@ -1,26 +1,18 @@
 package com.binfree.web.user.service;
 
-import java.sql.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.RequestContextHolder;
 
-import com.binfree.web.user.domain.AuthVO;
 import com.binfree.web.user.domain.UsersVO;
 import com.binfree.web.user.mapper.UsersMapper;
+import com.binfree.web.user.security.CustomUserDetails;
 
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
+//@AllArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
 
@@ -45,25 +37,15 @@ public class UsersServiceImpl implements UsersService {
 	}
 	
 	@Override
-	public UsersVO getLoginUserInfo(String email) {
+	public CustomUserDetails getLoginUserInfo(String email) {
 		
 		System.out.println("usersServiceImple 진입 : " + email);
 		
-		UsersVO loginUserInfo = new UsersVO();
-		loginUserInfo = usersMapper.getLoginUserInfo(email);
-		System.out.println("usersServiceImple에서 userMapper 호출  : " + loginUserInfo);
+		CustomUserDetails user = new CustomUserDetails();
+		user = usersMapper.getLoginUserInfo(email);
+		System.out.println("usersServiceImple에서 userMapper 호출  : " + user.getName());
 		
-		/*
-		 * session.setAttribute("email", user.getEmail()); System.out.println("셋 세션");
-		 * 
-		 * session.setAttribute("password", user.getPassword());
-		 * session.setAttribute("name", user.getName()); session.setAttribute("phone",
-		 * user.getPhone()); session.setAttribute("zipCode", user.getZipCode());
-		 * session.setAttribute("loc", user.getLoc()); session.setAttribute("inputLoc",
-		 * user.getInputLoc());
-		 */
-		
-		return loginUserInfo;
+		return user;
 	}
 	
 
@@ -90,5 +72,13 @@ public class UsersServiceImpl implements UsersService {
 		usersMapper.byeUser(email);
 	}
 
+	@Override
+	public int emailCheck(String email) {
+		return usersMapper.emailCheck(email);
+	}
+
+	
+	
+	
 
 }

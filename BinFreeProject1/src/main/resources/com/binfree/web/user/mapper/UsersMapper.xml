@@ -4,12 +4,14 @@
 <mapper namespace="com.binfree.web.user.mapper.UsersMapper">
 	
 	<insert id="userJoin">
-  		insert into USERS values(#{id}, #{email}, #{password}, #{name}, #{phone}, #{zipCode}, #{loc}, #{inputLoc}, #{subItem}, #{subPhone}, #{subItem}, now(), now(), #{myBuddy}, #{check}, #{enabled} );
-
+  		insert into USERS values(#{id}, #{email}, #{password}, #{name}, #{phone}, #{zipCode}, #{loc}, #{inputLoc}, #{subName}, #{subPhone}, #{subItem}, now(), now(), #{myBuddy}, #{checkbox}, #{enabled}, #{auth} );
   	</insert>
-	<insert id="insertUserAuth">
-	 	insert into USERS_auth(email,auth) values( #{email}, "ROLE_MEMBER");
-	</insert>
+	
+	<select id="emailCheck" parameterType="String" resultType="Integer">
+		SELECT count(*)
+		FROM USERS
+		WHERE email = #{email};
+	</select>
 	
    <resultMap type="com.binfree.web.user.domain.UsersVO" id="usersMap">
       <id property="id" column="id" />
@@ -21,15 +23,9 @@
       <result property="zipCode" column="zipCode" />
       <result property="loc" column="loc" />
       <result property="inputLoc" column="inputLoc" />
-      <result property="subName" column="subName" />
-      <result property="subPhone" column="subPhone" />
-      <result property="subItem" column="subItem" />
       <result property="subStart" column="subStart" />
       <result property="subEnd" column="subEnd" />
-      <result property="myBuddy" column="myBuddy" />
-      <result property="check" column="check" />
-      <collection property="authList" resultMap="authMap">
-      </collection>
+      <result property="checkbox" column="checkbox" />
    </resultMap>
 
 	<resultMap type="com.binfree.web.user.domain.UsersVO" id="usersMap2">
@@ -42,19 +38,11 @@
       <result property="zipCode" column="zipCode" />
       <result property="loc" column="loc" />
       <result property="inputLoc" column="inputLoc" />
-      <result property="subName" column="subName" />
-      <result property="subPhone" column="subPhone" />
       <result property="subItem" column="subItem" />
       <result property="subStart" column="subStart" />
       <result property="subEnd" column="subEnd" />
-      <result property="myBuddy" column="myBuddy" />
    </resultMap>
 
-   <resultMap type="com.binfree.web.user.domain.AuthVO" id="authMap">
-      <result property="id" column="id" />
-      <result property="email" column="email" />
-      <result property="auth" column="auth" />
-   </resultMap>
 
    <select id="read" resultMap="usersMap">
 	   	<![CDATA[
@@ -64,16 +52,13 @@
 		   user.name, user.phone, 
 		   user.zipCode, user.loc, 
 		   user.inputLoc, 
-		   user.subName, 
-		   user.subPhone, 
-		   user.subItem, 
+		   user.subItem,
 		   user.subStart, 
-		   user.subEnd,
-		   user.myBuddy, 
+		   user.subEnd, 
 		   user.check, 
 		   auth.auth
-		   FROM bfree.USERS user LEFT OUTER JOIN bfree.USERS_auth auth on user.email = auth.email
-		    WHERE user.email = #{email};
+		   FROM bfree.USERS
+		   WHERE user.email = #{email};
 	   	]]>
    </select>
 
@@ -85,27 +70,13 @@
 		]]>
 	</select>
 
-   <select id="getLoginUserInfo" parameterType="string" resultMap="usersMap2">
+   <select id="getLoginUserInfo" resultType="com.binfree.web.user.security.CustomUserDetails">
 		<![CDATA[
-			SELECT id, 
-			email, 
-			password, 
-			name, 
-			phone, 
-			zipCode, 
-			loc, 
-			inputLoc, 
-			subName, 
-			subPhone, 
-			subItem, 
-			date_format(subStart, '%Y-%m-%d') as subStart, 
-			date_format(subEnd, '%Y-%m-%d') as subEnd, 
-			myBuddy
-			FROM USERS
+			SELECT * FROM users
 			WHERE email = #{email}		
 		]]>
 	</select>
-
+	
 	<select id="setModifyUserInfo" parameterType="com.binfree.web.user.domain.UsersVO" resultType="com.binfree.web.user.domain.UsersVO">
 		<![CDATA[
 			UPDATE USERS 

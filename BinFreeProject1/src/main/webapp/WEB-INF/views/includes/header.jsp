@@ -1,15 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.binfree.web.user.domain.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<% 
-	UsersVO user = (UsersVO)session.getAttribute("loginUserInfo"); //session에 있는 정보를 받아온다. 
-%>   
-
 
 <!DOCTYPE html>
 <html lang="en">
+
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 
 <head>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
@@ -36,14 +34,10 @@
   <link rel="stylesheet" href="/resources/css/menu_sideslide.css">
   <link rel="stylesheet" href="/resources/css/main.css">
   <link rel="stylesheet" href="/resources/css/responsive.css">
+  <link rel="stylesheet" href="/resources/css/adminpage.css">
 
   <script src="https://code.jquery.com/jquery-latest.js"></script>
   <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
- <!-- <script>
-    componentDidMount(){
-      Kakao.init('2a351a8d6b54e936968fb3673fae2a42');
-    }
-  </script>  --> 
 
 </head>
 
@@ -64,31 +58,52 @@
               <a class="nav-link page-scroll" href="/review/subscribe">구독</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link page-scroll" href="buddy.html">구인</a>
+              <a class="nav-link page-scroll" href="/form/register">구인</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link page-scroll" href="service.html">고객센터</a>
+              <a class="nav-link page-scroll" href="/service">고객센터</a>
             </li>
-            <sec:authorize access="isAnonymous()">
             <li class="nav-item">
-              <a class="nav-link page-scroll" href="user/login">로그인</a>
+              <a class="nav-link page-scroll" href="/review/list">리뷰</a>
             </li>
-            </sec:authorize>
+            
+            <li class="nav-item">
+            <!-- 로그인 안된 상태 -->
+             <sec:authorize access="isAnonymous()">
+             		 <a class="nav-link page-scroll" href='<c:url value="/user/loginpage"/>'>로그인</a>
+                </sec:authorize>
+                
+            </li>
+            
             <sec:authorize access="hasRole('ROLE_MEMBER')">
-            <li class="nav-item">
-               <a class="nav-link page-scroll" href="user/mypage"><%=user.getName()%>님 마이페이지</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link page-scroll" href="/">로그아웃</a>
-            </li>
-            </sec:authorize>
+            	<li class="nav-item">
+               		<a class="nav-link page-scroll" href="/user/mypage">
+               		<sec:authentication property="principal.name"/>님 마이페이지</a>
+               		<sec:authentication property="principal.email" var="email" />
+					<sec:authentication property="principal.name" var="userName" />
+					<sec:authentication property="principal.subItem" var="subItem" />
+             	</li>
+             	
+             	<li>
+             	<a class="nav-link page-scroll" onclick="document.getElementById('logout').submit();">로그아웃</a>
+				</li>
+					<form id="logout" action="/logout" method="POST">
+			  		 	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+					</form>
+            	
+              </sec:authorize>
+            
             <sec:authorize access="hasRole('ROLE_ADMIN')">
             <li class="nav-item">
-              <a class="nav-link page-scroll" href="user/login"><sec:authentication property="principal.username"/>관리자님 페이지</a>
+              <a class="nav-link page-scroll" href="/admin/bfamily/list">
+              <sec:authentication property="principal.name"/> 페이지</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link page-scroll" href="/">로그아웃</a>
-            </li>
+           <li>
+             	<a class="nav-link page-scroll" onclick="document.getElementById('logout').submit();">로그아웃</a>
+				</li>
+					<form id="logout" action="/logout" method="POST">
+			  		 	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+					</form>
             </sec:authorize>
           </ul>
         </div>

@@ -1,41 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-<!-- security token -->	
-  <meta name="_csrf" content="${_csrf.token}"/>	
-  <meta name="_csrf_header" content="${_csrf.headerName}"/>
-  
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="keywords" content="Bootstrap, Landing page, Template, Registration, Landing">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="author" content="Grayrids">
-  <title>Bin-Free Homepage</title>
+<!-- security token -->
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/resources/css/line-icons.css">
-  <link rel="stylesheet" href="/resources/css/owl.carousel.css">
-  <link rel="stylesheet" href="/resources/css/owl.theme.css">
-  <link rel="stylesheet" href="/resources/css/nivo-lightbox.css">
-  <link rel="stylesheet" href="/resources/css/magnific-popup.css">
-  <link rel="stylesheet" href="/resources/css/animate.css">
-  <link rel="stylesheet" href="/resources/css/color-switcher.css">
-  <link rel="stylesheet" href="/resources/css/menu_sideslide.css">
-  <link rel="stylesheet" href="/resources/css/main.css">
-  <link rel="stylesheet" href="/resources/css/responsive.css">
-  <link rel="stylesheet" href="/resources/css/mypage.css">
-  
-  <style>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta name="keywords"
+	content="Bootstrap, Landing page, Template, Registration, Landing">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="Grayrids">
+<title>Bin-Free Homepage</title>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/css/line-icons.css">
+<link rel="stylesheet" href="/resources/css/owl.carousel.css">
+<link rel="stylesheet" href="/resources/css/owl.theme.css">
+<link rel="stylesheet" href="/resources/css/nivo-lightbox.css">
+<link rel="stylesheet" href="/resources/css/magnific-popup.css">
+<link rel="stylesheet" href="/resources/css/animate.css">
+<link rel="stylesheet" href="/resources/css/color-switcher.css">
+<link rel="stylesheet" href="/resources/css/menu_sideslide.css">
+<link rel="stylesheet" href="/resources/css/main.css">
+<link rel="stylesheet" href="/resources/css/responsive.css">
+<link rel="stylesheet" href="/resources/css/mypage.css">
+
+<style>
 @import
 	url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap')
 	;
@@ -149,9 +153,10 @@
 	background-position: -15px 0;
 }
 </style>
-	
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  
+
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <script>
 window.onload = function() {
 	
@@ -262,8 +267,8 @@ function modify_userInfo(){
 		data : JSON.stringify({'email' : email, 'phone' : phone}),
 		dataType: 'text',
 		success: function(){
-			alert("회원정보 수정이 완료 되었습니다.");
-			location.replace("/");	
+			alert("나의 정보가 수정 되었습니다.");
+			window.location.reload();
 		},
 		error:function(e){
 			console.log(e);
@@ -294,8 +299,8 @@ function modify_subInfo() {
 		dataType: 'text',
 		data: JSON.stringify({'subName' : subName, 'subPhone' : subPhone, 'zipCode' : zipCode, 'loc' : loc, 'inputLoc' : inputLoc}),
 		success: function() {
-			alert("구독정보 수정이 완료 되었습니다.");
-			location.replace("/");
+			alert("수정되었습니다.");
+			window.location.replace();
 			console.log("리플레이스??");
 		},
 		error: function(e){console.log(e);}
@@ -322,7 +327,7 @@ function modify_pwd() {
 		data : password,
 		dataType: 'text',
 		success: function(){
-			alert("비밀번호 수정이 완료 되었습니다.");
+			alert("수정되었습니다.");
 			location.replace("/");	
 			console.log("리플레이스??");
 
@@ -371,7 +376,7 @@ function modify_pwd() {
 </head>
 
 <body>
-  <!-- Header Section Start -->
+	<!-- Header Section Start -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!-- Header Section End -->
 
@@ -393,6 +398,26 @@ function modify_pwd() {
           <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-myinfo" role="tabpanel" aria-labelledby="nav-home-tab">
               <div class="row">
+              <c:choose>
+              	<c:when test="${userInfo.password == null}">
+              		<div class="container">
+				        <div class="row">          
+				          <div class="col-md-12">
+				            <!--matching image div-->
+				            <div class="p-3 py-5" style="margin-top: 100px;">
+				              <div class="mt-5 text-center">
+				                <img src="/resources/img/portfolio/nosub.png" alt="" />
+				              </div>
+				              <div class="mt-5 text-center">
+				                <p><br/></p>
+				                <h2 class="section-title" style="font-size: 20px;">카카오 로그인 중입니다.</h2>                
+				              </div>
+				            </div>
+				          </div>
+				        </div>
+				      </div> 
+				  </c:when>
+              	<c:otherwise>
                 <!-- myinfo Start -->
                 <div class="col-md-7 border-right" id="myinfo">
                   <!--border-right-->
@@ -402,11 +427,11 @@ function modify_pwd() {
                     </div>
                     <div class="row mt-2">
                       <div class="col-md-12"><label class="labels">이름</label><input type="text" class="form-control"
-                          value="${name }" readonly="true"/></div>
-                      <div class="col-md-12"><label class="labels">전화번호</label><input type="text" class="form-control phoneNumber"
-                          id="phone" value="${phone }"/></div>
+                          value="${userInfo.name }" readonly="true"/></div>
+                      <div class="col-md-12"><label class="labels">전화번호</label><input type="text" class="form-control"
+                          id="phone" value="${userInfo.phone }"/></div>
                       <div class="col-md-12"><label class="labels">이메일 ID</label><input type="text" class="form-control"
-                          id="email" value="${email}" readonly="true"/></div>
+                          id="email" value="${userInfo.email}" readonly="true"/></div>
                     </div>
                     <div class="mt-5 text-center">
                       <button class="btn btn-common btn-effect" id="userinfo_submit" onclick="modify_userInfo()">내 정보 수정</button>
@@ -422,7 +447,7 @@ function modify_pwd() {
                     </div>
                     <div class="row mt-2">
                       <div class="col-md-12"><label class="labels">현재 비밀번호</label><input type="password"
-                          class="form-control" value="${password }" readonly="true" /></div>
+                          class="form-control" value="${userInfo.password }" readonly="true" /></div>
                     </div>
                     <div class="row mt-2">
                       <div class="col-md-12"><label class="labels">수정할 비밀번호</label><input type="button" id="sbutton" value="보이기" class="button" />
@@ -433,15 +458,17 @@ function modify_pwd() {
                     <button class="btn btn-common btn-effect" id="submit_pwd" onclick="modify_pwd()" >비밀번호 수정</button>                    
                   </div>
                 </div>
-              </div>
-            </div>
+                </c:otherwise>
+			</c:choose>
+              </div> <!-- div class="row"end -->
+            </div> <!-- div class="tab-pane fade show active" end  -->
             <!-- myinfo End -->
            
           <!-- subinfo Start -->
             <div class="tab-pane fade" id="nav-subinfo" role="tabpanel" aria-labelledby="nav-profile-tab">
               <div class="row">
               <c:choose>
-              	<c:when test="${zipCode == null}">
+              	<c:when test="${userInfo.zipCode == null}">
               		<div class="container">
 				        <div class="row">          
 				          <div class="col-md-12">
@@ -468,15 +495,15 @@ function modify_pwd() {
                     </div>
                     <div class="row mt-2">
                       <div class="col-md-8"><label class="labels">구독 상품</label>
-                      <input type="text" class="form-control" value="" disabled /></div>
+                      <input type="text" class="form-control" value="${userInfo.subItem }" disabled /></div>
                       <div class="col-md-6"><label class="labels">구독 시작</label>
-                      <input type="text" class="form-control" value="${subStart}" readonly="true"/></div>
+                      <input type="text" class="form-control" value="${userInfo.subStart}" readonly="true"/></div>
                       <div class="col-md-6"><label class="labels">구독 종료</label>
-                      <input type="text" class="form-control" value="${subEnd }" readonly="true"/></div>
+                      <input type="text" class="form-control" value="${userInfo.subEnd }" readonly="true"/></div>
                       <div class="col-md-6"><label class="labels">구독자</label><input id="sub_name" type="text" class="form-control"
-                          value="${subName }"/></div>
-                      <div class="col-md-6"><label class="labels">구독자 연락처</label><input id="sub_phone" type="text" class="form-control phoneNumber"
-                           value="${subPhone }"/></div>
+                          value="${userInfo.subName }"/></div>
+                      <div class="col-md-6"><label class="labels">구독자 연락처</label><input id="sub_phone" type="text" class="form-control"
+                           value="${userInfo.subPhone }"/></div>
                     </div>
                     <br><br>
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -484,13 +511,13 @@ function modify_pwd() {
                     </div>
                     <div class="row mt-2">
                       <div class="col-md-6"><label class="labels">우편번호</label><input type="text" class="form-control"
-                        id="zipCode" value="${zipCode }" readonly="true"/></div>
+                        id="zipCode" value="${userInfo.zipCode }" readonly="true"/></div>
                       <div class="col-md-6"><button class="btn btn-common btn-effect btn-loc" onclick="findAddress()" id="submit" style="margin-top: 29px;">
                        	 주소 찾기</button></div>
                       <div class="col-md-12"><label class="labels">기본 주소</label><input type="text" class="form-control"
-                         id="loc" value="${loc }" readonly="true" /></div>
+                         id="loc" value="${userInfo.loc }" readonly="true" /></div>
                       <div class="col-md-12"><label class="labels">상세 주소</label><input type="text" class="form-control"
-                       id="inputLoc" value="${inputLoc }"/></div>
+                       id="inputLoc" value="${userInfo.inputLoc }"/></div>
                     </div>
                     <div class="mt-5 text-center">
                       <button class="btn btn-common btn-effect" id="sub_submit" onclick="modify_subInfo()">구독 정보 수정</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -498,84 +525,102 @@ function modify_pwd() {
                     </div>
                   </div>
                 </div>
-                
-                <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="text-right cross">
-								<i class="fa fa-times mr-2" data-dismiss="modal"></i>
-							</div>
-							<div class="card-body text-center">
-								<img src="/resources/img/good.jpg" height="100" width="100">
-									<div class="comment-box text-center">
-										<p style="font-size: 25px; padding: 20px;">서비스에 만족하셨나요?</p>
-											<form method="post" id="insert-form">
-												<input type="hidden" id="email" value="${loginUserVO.email}" /> 
-												<input type="hidden" id="userName" value="${loginUserVO.name}" /> 
-												<input type="hidden" id="subItem" value="${loginUserVO.subEnd}" />
-												<input type="hidden" id="star" />
-												<div class="rating">
-													<input type="radio" name="star" value="5" id="5"><label	for="5">☆</label> 
-													<input type="radio" name="star" value="4" id="4"><label for="4">☆</label> 
-													<input type="radio" name="star" value="3" id="3"><label for="3">☆</label> 
-													<input type="radio" name="star" value="2" id="2"><label for="2">☆</label> 
-													<input type="radio" name="star" value="1" id="1"><label for="1">☆</label>
+										<div class="modal fade" id="form" tabindex="-1" role="dialog"
+											aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered"
+												role="document">
+												<div class="modal-content">
+													<div class="text-right cross">
+														<i class="fa fa-times mr-2" data-dismiss="modal"></i>
+													</div>
+													<div class="card-body text-center">
+														<img src="/resources/img/good.jpg" height="100"
+															width="100">
+														<div class="comment-box text-center">
+															<p style="font-size: 25px; padding: 20px;">서비스에
+																만족하셨나요?</p>
+															<!-- 리뷰 작성 폼 action -->
+															<form action="/review/insert" method="post" id="insert-form">
+																<input type="hidden" id="email" value="${email}" />
+																<input type="hidden" id="userName" value="${name}" /> 
+																<input type="hidden" id="subItem" value="${subItem }" /> 
+																<input type="hidden" id="star" />
+																<div class="rating">
+																	<input type="radio" name="star" value="5" id="5">
+																	<label for="5">☆</label> 
+																	<input type="radio" name="star" value="4" id="4"> 
+																	<label for="4">☆</label> 
+																	<input type="radio" name="star" value="3" id="3"> 
+																	<label for="3">☆</label>
+																	<input type="radio" name="star" value="2" id="2"> 
+																	<label for="2">☆</label> 
+																	<input type="radio" name="star" value="1" id="1"> 
+																	<label for="1">☆</label>
+																</div>
+																<div class="comment-area">
+																<textarea class="form-control" id="contents" name="contents" placeholder="리뷰를 작성해주세요." rows="4"></textarea>
+																</div>
+																<div class="text-center mt-4">
+																	<button name="subBtn" type="submit" class="btn btn-success send px-4">
+																		작성 완료 
+																		<i class="fa fa-long-arrow-right ml-1"></i>
+																	</button>
+																	<button name="subBtn" type="button" class="btn btn-success send px-4" data-dismiss="modal">
+																		취소 
+																		<i class="fa fa-long-arrow-right ml-1"></i>
+																	</button>
+																</div>
+															</form>
+														</div>
+													</div>
 												</div>
-												<div class="comment-area">
-													<textarea class="form-control" id="contents" name="contents" placeholder="리뷰를 작성해주세요." rows="4"></textarea>
-												</div>
-												<div class="text-center mt-4">
-													<button name="subBtn" type="button" class="btn btn-success send px-4" onclick="insert();">
-																	작성 완료 <i class="fa fa-long-arrow-right ml-1"></i>
-													</button>
-													<button name="subBtn" type="button" class="btn btn-success send px-4" data-dismiss="modal">
-																	취소 <i class="fa fa-long-arrow-right ml-1"></i>
-													</button>
-												</div>
-											</form>
+											</div>
 										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                
-		<!-- mybuddyinfo Start -->	
-                <div class="col-md-4">
-                  <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                       <h6 class="text-right">나의 Buddy</h6>
-                    </div>
-                    <div class="d-flex flex-row mt-3 exp-container"><img src="img/buddy/human.jpeg"
-                      width="350" height="460"></div>
-                      <div class="d-flex flex-row mt-3 exp-container">
-                    <div class="work-experience ml-1"><span class="font-weight-bold" style="font-size: larger;">김홍홍</span><span>Buddy</span><span class="d-block text-black-50 labels">010-4321-8765</span><span
-                        class="d-block text-black-50 labels">March,2017 - May 2020</span></div>
-                  </div>
-                  <hr>
-                  </div>
-                </div>
-               <!-- mybuddyinfo End -->
-              </div>
-            </div>
-            </c:otherwise> 
-           </c:choose>         
-          <!-- subinfo End -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+										
 
-  <!-- Mypage Section End -->
+										<!-- mybuddyinfo Start -->
+										<div class="col-md-4">
+											<div class="p-3 py-5">
+												<div
+													class="d-flex justify-content-between align-items-center mb-3">
+													<h6 class="text-right">나의 Buddy</h6>
+												</div>
+												<div class="d-flex flex-row mt-3 exp-container">
+													<img src="img/buddy/human.jpeg" width="350" height="460">
+												</div>
+												<div class="d-flex flex-row mt-3 exp-container">
+													<div class="work-experience ml-1">
+														<span class="font-weight-bold" style="font-size: larger;">김홍홍</span><span>Buddy</span><span
+															class="d-block text-black-50 labels">010-4321-8765</span><span
+															class="d-block text-black-50 labels">March,2017 -
+															May 2020</span>
+													</div>
+												</div>
+												<hr>
+											</div>
+										</div>
+										<!-- mybuddyinfo End -->
+						</c:otherwise>
+					</c:choose>
+					</div> <!-- div class="row" end  -->
+				</div>	<!-- div class="tab-pane fade" end -->
+			<!-- subinfo End -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Mypage Section End -->
 
 
-
-  <!-- Footer Section Start -->
+	<!-- Footer Section Start -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
-
 
 	<script type="text/javascript" src="/resources/js/review.js"></script>
 	<script>
+	
+		
 	
 	function insert() {
 		$('input[name="star"]').each(function() {
@@ -583,6 +628,10 @@ function modify_pwd() {
 	            $('#star').val(this.value);
 	        }
 	    });
+	
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
 		var email = $('#email').val();
 		var star = $('#star').val();
 		var contents = $('#contents').val();
@@ -592,23 +641,25 @@ function modify_pwd() {
 		$.ajax({
 			url: "/review/insert",
 			method:"post",
+			beforeSend : function(xhr)
+	        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				xhr.setRequestHeader(header, token);
+	        },
 			data: {'email': email, 'star' : star, 'contents' : contents, 'userName':userName, 'subItem':subItem},
 			dataType: 'text',
 			success: function(data){
 				alert("리뷰 등록이 완료되었습니다!");
 				$('#modal').modal('hide');
 				window.location.href='/review/subscribe';
-			}
+			}error:function(e){
+				console.log(e);
+			}	
 		});
 	}
 	
 	$(document).ready(function() {
-		
-		$(document).on("keyup", ".phoneNumber", function() { 
-			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
-		});		
-			
-	});
+			console.log(${list});
+		});
 		$('.starRev span').click(function() {
 			$(this).parent().children('span').removeClass('on');
 			$(this).addClass('on').prevAll('span').addClass('on');

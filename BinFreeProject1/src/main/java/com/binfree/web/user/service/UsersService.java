@@ -1,8 +1,7 @@
 package com.binfree.web.user.service;
 
-import javax.servlet.http.HttpSession;
-
 import com.binfree.web.user.domain.UsersVO;
+import com.binfree.web.user.security.CustomUserDetails;
 
 public interface UsersService {
    
@@ -17,7 +16,7 @@ public interface UsersService {
 	
 	public UsersVO getEmail(UsersVO user);
 	
-	public UsersVO getLoginUserInfo(String email);
+	public CustomUserDetails getLoginUserInfo(String email);
 	
 	public void setModifyUserInfo(UsersVO modifyUserInfo);
 
@@ -26,5 +25,7 @@ public interface UsersService {
 	public void setModifySubInfo(UsersVO modifySubInfo);
 	
 	public void byeUser(String email);
+	
+	public int emailCheck(String email);
 	
 }

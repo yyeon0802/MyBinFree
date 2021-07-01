@@ -28,13 +28,14 @@
   <link rel="stylesheet" href="/resources/css/responsive.css">
 
   <script src="https://code.jquery.com/jquery-latest.js"></script>
- 
+  <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+  <script>
+  </script>
 
 </head>
 
 <body>
-    
-  <!-- Header Section Start -->
+    <!-- Header Section Start -->
   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     <!-- Main Carousel Section -->
@@ -200,6 +201,25 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div id="testimonials" class="touch-slider owl-carousel">
+            <c:forEach items='${list}' var="list">
+            <div class="item">
+              <div class="testimonial-item">
+                <div class="author">
+                  <div class="author-info">
+                    <h2><c:out value="${list.userName }"></c:out></h2>
+                    <c:forEach var="i" begin="1" end="${list.star }">
+                    <span><i class="lni-star-filled"></i></span>
+                    </c:forEach>
+                  </div>
+                </div>
+                <div class="content-inner">
+                  <p class="description"><c:out value="${list.contents }"></c:out></p>
+                </div>
+              </div>
+            </div>
+            </c:forEach>
+            
+            <!--  
             <div class="item">
               <div class="testimonial-item">
                 <div class="author">
@@ -210,14 +230,13 @@
                     <span><i class="lni-star-filled"></i></span>
                     <span><i class="lni-star-filled"></i></span>
                     <span><i class="lni-star-filled"></i></span>
-                    <!-- <span>Marketing Head Matrix media</span> -->
                   </div>
                 </div>
                 <div class="content-inner">
                   <p class="description">유튜브 프리미엄 같은 녀석...</p>
                 </div>
               </div>
-            </div>
+            </div>            
             <div class="item">
               <div class="testimonial-item">
                 <div class="author">
@@ -230,7 +249,6 @@
                     <span><i class="lni-star-filled"></i></span>
                     <span><i class="lni-star-filled"></i></span>
                     <span><i class="lni-star-filled"></i></span>
-                    <!-- <span>Marketing Head Matrix media</span> -->
                   </div>
                 </div>
                 <div class="content-inner">
@@ -250,7 +268,6 @@
                     <span><i class="lni-star-filled"></i></span>
                     <span><i class="lni-star"></i></span>
                     <span><i class="lni-star"></i></span>
-                    <!-- <span>Marketing Head Matrix media</span> -->
                   </div>
                 </div>
                 <div class="content-inner">
@@ -270,7 +287,6 @@
                     <span><i class="lni-star-filled"></i></span>
                     <span><i class="lni-star-filled"></i></span>
                     <span><i class="lni-star"></i></span>
-                    <!-- <span>Marketing Head Matrix media</span> -->
                   </div>
                 </div>
                 <div class="content-inner">
@@ -291,7 +307,6 @@
                     <span><i class="lni-star-filled"></i></span>
                     <span><i class="lni-star-filled"></i></span>
                     <span><i class="lni-star"></i></span>
-                    <!-- <span>Marketing Head Matrix media</span> -->
                   </div>
                 </div>
                 <div class="content-inner">
@@ -302,15 +317,14 @@
           </div>
         </div>
       </div>
+      -->
     </div>
   </section>
   <!-- Testimonial Section End -->
 
   <!-- Footer Section Start -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
-  <!-- Footer Section End -->
+  <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
-  
 </body>
 
 </html>
