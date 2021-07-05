@@ -24,8 +24,12 @@ public interface UsersService {
 	
 	public void setModifySubInfo(UsersVO modifySubInfo);
 	
+	public void setSubInfo(UsersVO modifySubInfo);
+	
 	public void byeUser(String email);
 	
 	public int emailCheck(String email);
+	
+	public int userCount();
 	
 }

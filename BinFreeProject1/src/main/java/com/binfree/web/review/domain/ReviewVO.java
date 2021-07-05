@@ -2,10 +2,8 @@ package com.binfree.web.review.domain;
 
 import java.sql.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.Data;
-import lombok.Setter;
 
 @Data
 public class ReviewVO {
@@ -20,5 +18,5 @@ public class ReviewVO {
 	private String contents;
 	private int startIndex;
 	private int cntPerPage;
-	
+	private int num;
 }

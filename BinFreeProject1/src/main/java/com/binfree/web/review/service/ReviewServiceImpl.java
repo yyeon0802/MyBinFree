@@ -1,6 +1,9 @@
 package com.binfree.web.review.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,7 +74,28 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		return mapper.getStarTotal();
 	}
-
+	
+	@SuppressWarnings("rawtypes")
+	public List<Map> getStarNum() {
+		List<Map> list = new ArrayList<Map>();
+		HashMap<String, Object> star = new HashMap<String, Object>();
+		
+		double per = 0;
+		String [] name = {"one","two","three","four","five"};
+		for (int i = 0; i < 5; i++) {
+			per = ((double)mapper.getStarNum(i+1) / (double)mapper.getTotal()) * 100;
+			if(per >= 100) {
+				per = 100;
+				star.put(name[i], Math.round(per)+"%");
+			}else {
+				star.put(name[i], Math.round(per)+"%");
+			}
+		}
+		
+		list.add(star);
+		
+		return list;
+	}
 
 }
 

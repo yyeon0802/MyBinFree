@@ -5,23 +5,6 @@
 
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
-<style>
-/* PC 카카오톡 채널 버튼 위치 */
-.kakaoChatPc {
-	position: fixed;
-	z-index: 999;
-	right: 20px; /* 화면 오른쪽으로부터의 거리, 숫자만 입력 */
-	bottom: 20px; /* 화면 아래쪽으로부터의 거리, 숫자만 입력 */
-}
-/* 모바일 카카오톡 채널 버튼 위치 */
-.kakaoChatMob {
-	position: fixed;
-	z-index: 999;
-	right: 20px; /* 화면 오른쪽으로부터의 거리, 숫자만 입력 */
-	bottom: 20px; /* 화면 아래쪽으로부터의 거리, 숫자만 입력 */
-}
-</style>
-
 <!-- Contact Section Start -->
 <section id="contact" class="section" style="margin-top: 40px;">
 	<div class="contact-form">
@@ -38,7 +21,8 @@
 				<div class="col-lg-12 col-md-12 col-xs-12">
 
 					<div class="contact-block">
-						<form id="contactForm" action="/admin/form/register" method="post" role="form">
+						<form id="contactForm" action="/admin/form/register" method="post"
+							role="form">
 							<div class="row">
 								<div class="col-md-7 border-right">
 
@@ -50,7 +34,7 @@
 
 									<div class="form-group">
 										<input type="text" placeholder="연락처를 입력하세요" id="msg_subject"
-											name="phone" class="form-control" required
+											name="phone" class="form-control phoneNumber" maxlength="13" required
 											data-error="연락처를 입력해주세요">
 										<div class="help-block with-errors"></div>
 									</div>
@@ -158,12 +142,9 @@
 		</div>
 	</div>
 
-	<!-- PC 카카오톡 상담 버튼 -->
-	<a href="javascript:void kakaoChatStart()"
-		class="kakaoChatPc hidden-md hidden-sm hidden-xs"> <img
-		src="https://cdn.imweb.me/upload/S201612155852553de8738/636646a526ac3.png"
-		width="88px" height="88px">
-	</a>
+		<!-- PC 카카오톡 상담 버튼 -->
+	<%@ include file="/WEB-INF/views/includes/kakaochat.jsp"%>
+	
 </section>
 
 <!-- Contact Section End -->
@@ -385,20 +366,18 @@ $(document).ready(function(){
 	});
 	
 });
+
+
+/* 전화번호 -형식 넣기  */
+window.onload = function() {
+
+$(document).on("keyup", ".phoneNumber", function() { 
+  $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("—", "-") ); 
+	 });
+}
+
+
 </script>
-
-<!-- 카카오톡 채널 스크립트 -->
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type='text/javascript'>
-    Kakao.init('2a351a8d6b54e936968fb3673fae2a42'); // 사용할 앱의 JavaScript키를 입력해 주세요.
-    function kakaoChatStart() {
-        Kakao.Channel.chat({
-            channelPublicId: '_Kwfxls' // 카카오톡 채널 홈 URL에 명시된 ID를 입력합니다.
-        });
-    }
-</script>
-
-
 
 
 <%@ include file="/WEB-INF/views/includes/footer.jsp"%>

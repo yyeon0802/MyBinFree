@@ -281,7 +281,10 @@
   <!-- Features Section End -->
 
 
-  <!-- Footer Section Start -->
+		<!-- PC 카카오톡 상담 버튼 -->
+	<%@ include file="/WEB-INF/views/includes/kakaochat.jsp"%>
+
+	<!-- Footer Section Start -->
   <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 	
 </body>

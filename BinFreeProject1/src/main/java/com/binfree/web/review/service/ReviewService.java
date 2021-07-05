@@ -1,6 +1,7 @@
 package com.binfree.web.review.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.binfree.web.review.domain.Criteria;
 import com.binfree.web.review.domain.ReviewVO;
@@ -23,5 +24,6 @@ public interface ReviewService {
 
 	public boolean reviewUpdate(ReviewVO name);
 	
+	public List<Map> getStarNum();
 	
 }

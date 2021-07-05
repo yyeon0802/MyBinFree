@@ -37,6 +37,7 @@
 	
 	<mybatis-spring:scan base-package="com.binfree.web.user.mapper"></mybatis-spring:scan>
 	<mybatis-spring:scan base-package="com.binfree.web.review.mapper"></mybatis-spring:scan>
+	<mybatis-spring:scan base-package="com.binfree.web.subscribe.mapper"></mybatis-spring:scan>
 	<mybatis-spring:scan base-package="com.binfree.web.bfamily.mapper"></mybatis-spring:scan>
 	<mybatis-spring:scan base-package="com.binfree.web.buddy.mapper"></mybatis-spring:scan>
 	<mybatis-spring:scan base-package="com.binfree.web.form.mapper"></mybatis-spring:scan>

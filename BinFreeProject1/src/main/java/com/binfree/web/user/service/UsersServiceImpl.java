@@ -78,7 +78,16 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	
-	
+	@Override
+	public void setSubInfo(UsersVO modifySubInfo) {
+		
+		usersMapper.setSubInfo(modifySubInfo);
+	}
+
+	@Override
+	public int userCount() {
+		return usersMapper.userCount();
+	}
 	
 
 }

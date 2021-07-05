@@ -97,7 +97,7 @@ String msg = (String) request.getAttribute("msg");
 												id="pwd1" placeholder="비밀번호를 입력해주세요" method="post">
 											<div id="error-password" class=" result-check"
 												style="color: red; padding-left: 20px; padding-bottom: 7px"></div>
-															 	
+
 											<input type="password" class="form-control" name="pwd"
 												id="pwd2" style="margin-bottom: 0;"
 												placeholder="비밀번호를 다시 입력해주세요" method="post">
@@ -107,9 +107,10 @@ String msg = (String) request.getAttribute("msg");
 												일치합니다.</div>
 											<div id="danger" style="color: red; padding-left: 20px;">비밀번호가
 												일치하지 않습니다.</div>
-											<input type="text" class="form-control" name="name"
+											<input type="text" class="form-control" name="name" id="name"
 												style="margin-top: 20px;" placeholder="이름을 입력해주세요">
-											<input type="text" class="form-control" name="phone"
+											<input type="text" class="form-control phoneNumber"
+												name="phone" id="phone" maxlength="13"
 												placeholder="연락처를 입력해주세요(예: 01012341234)" method="post">
 										</div>
 									</div>
@@ -152,9 +153,8 @@ String msg = (String) request.getAttribute("msg");
 																</p>
 																</br>
 																<p class='lh6 bs4'>
-																	<strong>제1조(개인정보의 처리 목적)<br />
-																	<br />
-																	<em class="emphasis">
+																	<strong>제1조(개인정보의 처리 목적)<br /> <br /> <em
+																		class="emphasis">
 																			<(주)BFree>('https://bfree.com'이하 'BFree') </em>은(는) 다음의
 																		목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는
 																		이용되지 않으며 이용 목적이 변경되는 겨우에는 「개인정보 보호법」 제18조에 따라 별도의 동의를
@@ -177,14 +177,12 @@ String msg = (String) request.getAttribute("msg");
 																	<p class="ls2">범죄의 예방 및 수사 등을 목적으로 개인정보를 처리합니다.</p>
 																	</br>
 																</ul>
-																</br>
-																</br>
+																</br> </br>
 																<p class='lh6 bs4'>
-																	<strong>제2조(개인정보의 처리 및 보유 기간)</strong></br>
-																	</br>① <em class="emphasis"> <(주)BFree> </em>은(는) 법령에 따른
-																	개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간
-																	내에서 개인정보를 처리·보유합니다.</br>
-																	</br>② 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.
+																	<strong>제2조(개인정보의 처리 및 보유 기간)</strong></br> </br>① <em
+																		class="emphasis"> <(주)BFree> </em>은(는) 법령에 따른 개인정보
+																	보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서
+																	개인정보를 처리·보유합니다.</br> </br>② 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.
 																</p>
 																<ul class='list_indent2 mgt10'>
 																	<li class='tt'>1.<홈페이지 회원가입 및 관리></li>
@@ -197,14 +195,12 @@ String msg = (String) request.getAttribute("msg");
 																	</li>
 																	<li>예외사유 :</li>
 																</ul>
-																</br>
-																</br>
+																</br> </br>
 																<p class='lh6 bs4'>
-																	<strong>제3조(개인정보의 제3자 제공)</strong></br>
-																	</br> ① <em class="emphasis"> <(주)BFree> </em>은(는) 개인정보를
-																	제1조(개인정보의 처리 목적)에서 명시한 범위 내에서만 처리하며, 정보주체의 동의, 법률의 특별한
-																	규정 등 「개인정보 보호법」 제17조 및 제18조에 해당하는 경우에만 개인정보를 제3자에게
-																	제공합니다.
+																	<strong>제3조(개인정보의 제3자 제공)</strong></br> </br> ① <em
+																		class="emphasis"> <(주)BFree> </em>은(는) 개인정보를 제1조(개인정보의
+																	처리 목적)에서 명시한 범위 내에서만 처리하며, 정보주체의 동의, 법률의 특별한 규정 등 「개인정보
+																	보호법」 제17조 및 제18조에 해당하는 경우에만 개인정보를 제3자에게 제공합니다.
 																</p>
 																<p class="sub_p mgt10">
 																	② <span class="colorLightBlue"> <(주)BFree> </span>은(는)
@@ -217,12 +213,11 @@ String msg = (String) request.getAttribute("msg");
 																		질문과 답, 비밀번호, 로그인ID, 이름</li>
 																	<li>제공받는 자의 보유.이용기간: 지체없이 파기</li>
 																</ul>
-																</br>
-																</br>
+																</br> </br>
 																<p class='lh6 bs4'>
-																	<strong>제4조(개인정보처리 위탁)</strong></br>
-																	</br> ① <em class="emphasis"> <(주)BFree> </em>은(는) 원활한 개인정보
-																	업무처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.
+																	<strong>제4조(개인정보처리 위탁)</strong></br> </br> ① <em class="emphasis">
+																		<(주)BFree> </em>은(는) 원활한 개인정보 업무처리를 위하여 다음과 같이 개인정보 처리업무를
+																	위탁하고 있습니다.
 																</p>
 																<ul class='list_indent2 mgt10'>
 																	<li class='tt'>1. <(주)BFree></li>
@@ -240,15 +235,13 @@ String msg = (String) request.getAttribute("msg");
 																</p>
 																<p class='sub_p mgt10'>③ 위탁업무의 내용이나 수탁자가 변경될 경우에는
 																	지체없이 본 개인정보 처리방침을 통하여 공개하도록 하겠습니다.</p>
-																<br />
-																<br />
+																<br /> <br />
 																<p class="lh6 bs4">
 																	<strong>제5조(정보주체와 법정대리인의 권리·의무 및 그 행사방법)</strong>
 																</p>
 																<p class="ls2">
-																	<br />
-																	<br />① 정보주체는 (주)BFree에 대해 언제든지 개인정보 열람·정정·삭제·처리정지 요구
-																	등의 권리를 행사할 수 있습니다.
+																	<br /> <br />① 정보주체는 (주)BFree에 대해 언제든지 개인정보
+																	열람·정정·삭제·처리정지 요구 등의 권리를 행사할 수 있습니다.
 																</p>
 																<p class='sub_p'>② 제1항에 따른 권리 행사는(주)BFree에 대해 「개인정보
 																	보호법」 시행령 제41조제1항에 따라 서면, 전자우편, 모사전송(FAX) 등을 통하여 하실 수
@@ -263,74 +256,64 @@ String msg = (String) request.getAttribute("msg");
 																<p class='sub_p'>⑥ (주)BFree은(는) 정보주체 권리에 따른 열람의 요구,
 																	정정·삭제의 요구, 처리정지의 요구 시 열람 등 요구를 한 자가 본인이거나 정당한 대리인인지를
 																	확인합니다.</p>
-																</br>
-																</br>
+																</br> </br>
 																<p class='lh6 bs4'>
-																	<strong>제6조(처리하는 개인정보의 항목 작성) </strong></br>
-																	</br> ① <em class="emphasis"> <(주)BFree> </em>은(는) 다음의 개인정보
-																	항목을 처리하고 있습니다.
+																	<strong>제6조(처리하는 개인정보의 항목 작성) </strong></br> </br> ① <em
+																		class="emphasis"> <(주)BFree> </em>은(는) 다음의 개인정보 항목을
+																	처리하고 있습니다.
 																</p>
 																<ul class='list_indent2 mgt10'>
 																	<li class='tt'>1< 홈페이지 회원가입 및 관리></li>
 																	<li>필수항목 : 이메일, 휴대전화번호, 자택주소, 비밀번호, 로그인ID, 이름</li>
 																	<li>선택항목 : 휴대전화번호, 자택전화번호, 성별, 생년월일</li>
 																</ul>
-																</br>
-																</br>
+																</br> </br>
 																<p class='lh6 bs4'>
 																	<strong>제7조(개인정보의 파기)<em class="emphasis"></strong>
 																</p>
 																<p class='ls2'>
 																	</br>① <(주)BFree></em> 은(는) 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게
-																	되었을 때에는 지체없이 해당 개인정보를 파기합니다.</br>
-																	</br>② 정보주체로부터 동의받은 개인정보 보유기간이 경과하거나 처리목적이 달성되었음에도 불구하고 다른
-																	법령에 따라 개인정보를 계속 보존하여야 하는 경우에는, 해당 개인정보를 별도의 데이터베이스(DB)로
-																	옮기거나 보관장소를 달리하여 보존합니다.</br>1. 법령 근거 :</br>2. 보존하는 개인정보 항목 : 계좌정보,
-																	거래날짜</br>
-																	</br>③ 개인정보 파기의 절차 및 방법은 다음과 같습니다.</br>1. 파기절차</br> <(주)BFree> 은(는) 파기
-																	사유가 발생한 개인정보를 선정하고, <(주)BFree> 의 개인정보 보호책임자의 승인을 받아
-																	개인정보를 파기합니다.</br>
+																	되었을 때에는 지체없이 해당 개인정보를 파기합니다.</br> </br>② 정보주체로부터 동의받은 개인정보 보유기간이
+																	경과하거나 처리목적이 달성되었음에도 불구하고 다른 법령에 따라 개인정보를 계속 보존하여야 하는
+																	경우에는, 해당 개인정보를 별도의 데이터베이스(DB)로 옮기거나 보관장소를 달리하여 보존합니다.</br>1.
+																	법령 근거 :</br>2. 보존하는 개인정보 항목 : 계좌정보, 거래날짜</br> </br>③ 개인정보 파기의 절차 및 방법은
+																	다음과 같습니다.</br>1. 파기절차</br> <(주)BFree> 은(는) 파기 사유가 발생한 개인정보를 선정하고,
+																	<(주)BFree> 의 개인정보 보호책임자의 승인을 받아 개인정보를 파기합니다.</br>
 																</p>
 																<p class='sub_p mgt10'>2. 파기방법</p>
 																<p class='sub_p'>전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을
 																	사용합니다.</p>
 																종이에 출력된 개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다
 																</p>
-																</br>
-																</br>
+																</br> </br>
 																<p class='lh6 bs4'>
 																	<strong>제8조(개인정보의 안전성 확보 조치)<em
-																		class="emphasis"></br>
-																		</br> <(주)BFree> </em>은(는) 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.
+																		class="emphasis"></br> </br> <(주)BFree> </em>은(는) 개인정보의 안전성 확보를
+																		위해 다음과 같은 조치를 취하고 있습니다.
 																	</strong>
 																</p>
 																<p class='sub_p mgt10'>
 																	1. 개인정보 취급 직원의 최소화 및 교육</br> 개인정보를 취급하는 직원을 지정하고 담당자에 한정시켜
-																	최소화 하여 개인정보를 관리하는 대책을 시행하고 있습니다.</br>
-																	</br>2. 해킹 등에 대비한 기술적 대책</br> <<em class="emphasis">(주)BFree</em>>('<em
-																		class="emphasis">BFree</em>')은 해킹이나 컴퓨터 바이러스 등에 의한
-																	개인정보 유출 및 훼손을 막기 위하여 보안프로그램을 설치하고 주기적인 갱신·점검을 하며 외부로부터
-																	접근이 통제된 구역에 시스템을 설치하고 기술적/물리적으로 감시 및 차단하고 있습니다.</br>
-																	</br>3. 개인정보의 암호화</br> 이용자의 개인정보는 비밀번호는 암호화 되어 저장 및 관리되고 있어, 본인만이
-																	알 수 있으며 중요한 데이터는 파일 및 전송 데이터를 암호화 하거나 파일 잠금 기능을 사용하는 등의
-																	별도 보안기능을 사용하고 있습니다.</br>
-																	</br>4. 접속기록의 보관 및 위변조 방지</br> 개인정보처리시스템에 접속한 기록을 최소 6개월 이상 보관,
-																	관리하고 있으며, 접속 기록이 위변조 및 도난, 분실되지 않도록 보안기능 사용하고 있습니다.</br>
-																	</br>5. 개인정보에 대한 접근 제한</br> 개인정보를 처리하는 데이터베이스시스템에 대한 접근권한의
-																	부여,변경,말소를 통하여 개인정보에 대한 접근통제를 위하여 필요한 조치를 하고 있으며
-																	침입차단시스템을 이용하여 외부로부터의 무단 접근을 통제하고 있습니다.</br>
-																	</br>6. 비인가자에 대한 출입 통제</br> 개인정보를 보관하고 있는 물리적 보관 장소를 별도로 두고 이에 대해
-																	출입통제 절차를 수립, 운영하고 있습니다.</br>
-																	</br>
+																	최소화 하여 개인정보를 관리하는 대책을 시행하고 있습니다.</br> </br>2. 해킹 등에 대비한 기술적 대책</br> <<em
+																		class="emphasis">(주)BFree</em>>('<em class="emphasis">BFree</em>')은
+																	해킹이나 컴퓨터 바이러스 등에 의한 개인정보 유출 및 훼손을 막기 위하여 보안프로그램을 설치하고
+																	주기적인 갱신·점검을 하며 외부로부터 접근이 통제된 구역에 시스템을 설치하고 기술적/물리적으로 감시
+																	및 차단하고 있습니다.</br> </br>3. 개인정보의 암호화</br> 이용자의 개인정보는 비밀번호는 암호화 되어 저장 및
+																	관리되고 있어, 본인만이 알 수 있으며 중요한 데이터는 파일 및 전송 데이터를 암호화 하거나 파일
+																	잠금 기능을 사용하는 등의 별도 보안기능을 사용하고 있습니다.</br> </br>4. 접속기록의 보관 및 위변조 방지</br>
+																	개인정보처리시스템에 접속한 기록을 최소 6개월 이상 보관, 관리하고 있으며, 접속 기록이 위변조 및
+																	도난, 분실되지 않도록 보안기능 사용하고 있습니다.</br> </br>5. 개인정보에 대한 접근 제한</br> 개인정보를
+																	처리하는 데이터베이스시스템에 대한 접근권한의 부여,변경,말소를 통하여 개인정보에 대한 접근통제를
+																	위하여 필요한 조치를 하고 있으며 침입차단시스템을 이용하여 외부로부터의 무단 접근을 통제하고
+																	있습니다.</br> </br>6. 비인가자에 대한 출입 통제</br> 개인정보를 보관하고 있는 물리적 보관 장소를 별도로 두고
+																	이에 대해 출입통제 절차를 수립, 운영하고 있습니다.</br> </br>
 																</p>
-																</br>
-																</br>
+																</br> </br>
 																<p class="lh6 bs4">
 																	<strong>제9조(개인정보 자동 수집 장치의 설치•운영 및 거부에 관한 사항)</strong>
 																</p>
 																<p class="ls2">
-																	<br />
-																	<br />(주)BFree 은(는) 정보주체의 이용정보를 저장하고 수시로 불러오는
+																	<br /> <br />(주)BFree 은(는) 정보주체의 이용정보를 저장하고 수시로 불러오는
 																	‘쿠키(cookie)’를 사용하지 않습니다.
 																<p class='sub_p mgt30'>
 																	<strong>제10조 (개인정보 보호책임자) </strong>
@@ -373,27 +356,22 @@ String msg = (String) request.getAttribute("msg");
 																	<li>연락처 : 02-234-1234, bfree@bfree.com,
 																		02-234-1234</li>
 																</ul>
-																</br>
-																</br>
+																</br> </br>
 																<p class='lh6 bs4'>
 																	<strong>제12조(권익침해 구제방법)<em class="emphasis"></em></strong>
 																</p>
-																<br />
-																<br />정보주체는 개인정보침해로 인한 구제를 받기 위하여 개인정보분쟁조정위원회, 한국인터넷진흥원
-																개인정보침해신고센터 등에 분쟁해결이나 상담 등을 신청할 수 있습니다. 이 밖에 기타 개인정보침해의
-																신고, 상담에 대하여는 아래의 기관에 문의하시기 바랍니다.<br />
-																<br /> 1. 개인정보분쟁조정위원회 : (국번없이) 1833-6972
-																(www.kopico.go.kr)<br /> 2. 개인정보침해신고센터 : (국번없이) 118
-																(privacy.kisa.or.kr)<br /> 3. 대검찰청 : (국번없이) 1301
-																(www.spo.go.kr)<br /> 4. 경찰청 : (국번없이) 182
-																(cyberbureau.police.go.kr)<br />
-																<br /> 「개인정보보호법」제35조(개인정보의 열람), 제36조(개인정보의 정정·삭제),
-																제37조(개인정보의 처리정지 등)의 규정에 의한 요구에 대 하여 공공기관의 장이 행한 처분 또는
-																부작위로 인하여 권리 또는 이익의 침해를 받은 자는 행정심판법이 정하는 바에 따라 행정심판을 청구할
-																수 있습니다.<br />
+																<br /> <br />정보주체는 개인정보침해로 인한 구제를 받기 위하여 개인정보분쟁조정위원회,
+																한국인터넷진흥원 개인정보침해신고센터 등에 분쟁해결이나 상담 등을 신청할 수 있습니다. 이 밖에 기타
+																개인정보침해의 신고, 상담에 대하여는 아래의 기관에 문의하시기 바랍니다.<br /> <br />
+																1. 개인정보분쟁조정위원회 : (국번없이) 1833-6972 (www.kopico.go.kr)<br />
+																2. 개인정보침해신고센터 : (국번없이) 118 (privacy.kisa.or.kr)<br />
+																3. 대검찰청 : (국번없이) 1301 (www.spo.go.kr)<br /> 4. 경찰청 :
+																(국번없이) 182 (cyberbureau.police.go.kr)<br /> <br />
+																「개인정보보호법」제35조(개인정보의 열람), 제36조(개인정보의 정정·삭제), 제37조(개인정보의
+																처리정지 등)의 규정에 의한 요구에 대 하여 공공기관의 장이 행한 처분 또는 부작위로 인하여 권리
+																또는 이익의 침해를 받은 자는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.<br />
 																<br /> ※ 행정심판에 대해 자세한 사항은 중앙행정심판위원회(www.simpan.go.kr)
-																홈페이지를 참고하시기 바랍니다.</br>
-																</br>
+																홈페이지를 참고하시기 바랍니다.</br> </br>
 																<p class='lh6 bs4'>
 																	<strong>제13조(개인정보 처리방침 변경)<em class="emphasis"></em></strong>
 																</p>
@@ -436,7 +414,7 @@ String msg = (String) request.getAttribute("msg");
 											<!-- <a href="#"><button type="submit" class="btn btn-common btn-effect btn-sub">가입신청</button></a>
                 </div><br> -->
 											<div style="text-align: center;">
-												<button type="submit" class="btn btn-common btn-effect"
+												<button type="button" class="btn btn-common btn-effect"
 													style="background-color: #F7E500; color: black;">
 													<img src="/resources/img/kakao.png" height="21px"
 														width="21px">&nbsp;카카오 간편 회원가입
@@ -452,10 +430,10 @@ String msg = (String) request.getAttribute("msg");
 									</div>
 								</div>
 						</div>
-						
-                          <input type="hidden" id='token'
-							name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-							<%-- <input type="hidden" id='header'
+
+						<input type="hidden" id='token' name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<%-- <input type="hidden" id='header'
 							name="header" value="${_csrf.headerName}" />  --%>
 
 						</form>
@@ -469,6 +447,30 @@ String msg = (String) request.getAttribute("msg");
 	<!-- Subcribe Section End -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
+
+	
+		<!--이메일 형식 체크-->
+		<script>
+			function email_check( email ) {    
+			    var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+			    return (email != '' && email != 'undefined' && regex.test(email)); 
+			}
+
+			$("input[type=email]").blur(function(){
+			  var email = $(this).val();
+			  if( email == '' || email == 'undefined') return;
+			  if(! email_check(email) ) {
+			  	$(".result-email").text('이메일 형식으로 적어주세요');
+			    $(this).focus();
+			    return false;
+			  }else {
+				$(".result-email").text('');
+			  }
+			});
+			
+		</script>
+		
+		
 	<!-- 비밀번호 일치 불일치 체크 -->
 	<script type="text/javascript">
 			$(function() {
@@ -493,27 +495,9 @@ String msg = (String) request.getAttribute("msg");
 					}
 				});
 			});
-			
-			
-			<!--이메일 형식 체크-->
-			function email_check( email ) {    
-			    var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-			    return (email != '' && email != 'undefined' && regex.test(email)); 
-			}
-
-			$("input[type=email]").blur(function(){
-			  var email = $(this).val();
-			  if( email == '' || email == 'undefined') return;
-			  if(! email_check(email) ) {
-			  	$(".result-email").text('이메일 형식으로 적어주세요');
-			    $(this).focus();
-			    return false;
-			  }else {
-				$(".result-email").text('');
-			  }
-			});
-			
 		</script>
+			
+	
 
 	<!-- 이메일 중복 체크 -->
 	<script type="text/javascript">
@@ -551,12 +535,10 @@ String msg = (String) request.getAttribute("msg");
 			    }
 			}
 				
-				                
-
-		
+				
 		</script>
 
-
+	<!-- 비밀번호 유효성 검사 -->
 	<script type="text/javascript">
 		
 		function password_check(password) {    
@@ -579,94 +561,14 @@ String msg = (String) request.getAttribute("msg");
 				  }else {
 					$("#error-password").text('');
 				  }
-	        
+			
 		});
 	        
 		</script>
 
-	<!--   <script type="text/javascript">
-			$(function() {
-				$("#success").hide();
-				$("#danger").hide();
-				$("#pwdander1").hide();
-				$("#pwdander2").hide();
-				$("#pwdander3").hide();
-
-				$("input").keyup(function() {
-					var pwd1 = $("#pwd1").val();
-					var pwd2 = $("#pwd2").val();
-					 var num = pwd1.search(/[0-9]/g);
-					 var eng = pwd1.search(/[a-z]/ig);
-					 var spe = pwd1.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-					 
-					 if(num < 0 || eng < 0 || spe < 0 ){
-						 $("#pwdander1").hide();
-						 $("#pwdander2").show();
-						 $("#pwdander3").hide();
-							$("#submit").removeAttr("disabled");
-					 }else if(pwd1.length < 8 || pwd1.length > 20){
-							$("#pwdander1").show();
-							$("#pwdander2").hide();
-							$("#pwdander3").hide();
-							$("#submit").removeAttr("disabled", "disabled");
-
-						 }else if(pw.search(/\s/) != -1){
-							 $("#pwdander1").hide();
-							 $("#pwdander2").hide();
-							 $("#pwdander3").show();
-								$("#submit").removeAttr("disabled", "disabled","disabled");
-
-						 }else {
-							 $("#pwdander1").hide();
-							 $("#pwdander2").hide();
-							 $("#pwdander3").hide();
-						 }
-					 
-					if (pwd1 != "" || pwd2 != "") {
-						if (pwd1 == pwd2) {  // 일치하는 경우
-							$("#success").show();
-							$("#danger").hide();
-							$("#submit").removeAttr("disabled");
-						} else if (pwd1 == "" || pwd2 == "") {		// 1개만 쓴경우
-							$("#success").hide();
-							$("#danger").hide();
-						} else {					// 2개 일치하지 않는 경우
-							$("#success").hide();
-							$("#danger").show();
-						$("#submit").attr("disabled", "disabled");
-						<id='submit' disabled="disabled"/>
-						}
-					}
-				});
-			});
-		</script> -->
-
-	<!-- 	<script type="text/javascript">>
-			$(function(){
-
-	 var pw = $("#pwd1").val();
-	 var num = pw.search(/[0-9]/g);
-	 var eng = pw.search(/[a-z]/ig);
-	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-
-	 if(pw.length < 8 || pw.length > 20){
-
-	  alert("8자리 ~ 20자리 이내로 입력해주세요.");
-	  return false;
-	 }else if(pw.search(/\s/) != -1){
-	  alert("비밀번호는 공백 없이 입력해주세요.");
-	  return false;
-	 }else if(num < 0 || eng < 0 || spe < 0 ){
-	  alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
-	  return false;
-	 }else {
-		console.log("통과"); 
-	    return true;
-	 }
-			}
-
-	}
-</script> -->
+	
+				
+	<!-- 비밀번호 유효성 검사 -->
 	<script>
 		$(document).ready(function() {
 			var msg = '<%=msg%>';
@@ -675,23 +577,48 @@ String msg = (String) request.getAttribute("msg");
 			}
 			$("#join_button").click(function() {
 				
-				if ($("#checkbox").is(":checked")) {
-					$("#join_form").attr("action", "/user/join");
-					$("#join_form").submit();
+				 if ($('#id_input').val() == '') {
+			            alert("아이디를 입력해주십시오");
+			            $('#id_input').focus();
+			            return false;
+			     } else if ($('#pwd1').val() == '') {
+			            alert("비밀번호를 입력해주십시오");
+			            $('#pwd1').focus();
+			            return false;
+			     } else if($('#name').val() == ''){
+						$('#name').focus();
+						alert('이름을 입력해주십시오.');
+						return false;
+			     } else if ($('#phone').val() == '') {
+			            alert("연락처를 입력해주십시오");
+			            $('#phone').focus();
+			            return false;
+			     } else {
+			    	 
+			    	 if ($("#checkbox").is(":checked")) {
+						$("#join_form").attr("action", "/user/join");
+						$("#join_form").submit();
+						alert("회원가입이 완료되었습니다.")
+						
+					} else {
+						alert("개인정보 동의에 체크해주세요!");
 
-					
-				} else {
-					alert("개인정보 동의에 체크해주세요!");
-
-				}
+					}
+			     }
 			});
 		});
-
 	</script>
 
 
-
-
+	/* 전화번호 -형식 넣기  */
+	<script>
+	window.onload = function() {
+   
+   $(document).on("keyup", ".phoneNumber", function() { 
+      $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("—", "-") ); 
+  	 });
+	}
+	</script>
 
 
 </body>

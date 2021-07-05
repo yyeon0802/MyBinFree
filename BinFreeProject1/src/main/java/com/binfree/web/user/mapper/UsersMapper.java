@@ -21,10 +21,14 @@ public interface UsersMapper {
 	public void setModifyUserInfo(UsersVO modifyUserInfo);
 	
 	public void setModifySubInfo(UsersVO modifySubInfo);
+	
+	public void setSubInfo(UsersVO modifySubInfo);
 
 	public void setModifyPwd(UsersVO modifyPwd);
 	
 	public void byeUser(String email);
 	
 	public int emailCheck(String email);
+	
+	public int userCount();
 }

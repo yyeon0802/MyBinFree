@@ -42,15 +42,15 @@
     <div id="carousel-area" style="max-width:100%; height: auto;">
       <div class="carousel-inner" role="listbox">
         <div class="carousel-item active">
-          <img src="/resources/img/slider/Recycling_Bin_GIF_Header.gif" width="150%" height="100%" style="padding-top: 60px;" alt="">
+          <img src="/resources/img/slider/Recycling_Bin_GIF_Header.gif" width="150%" height="700px" style="padding-top: 60px;" alt="">
           <div class="carousel-caption text-left">
             <h3 class="wow fadeInRight" data-wow-delay="0.2s">
               </h1>
-              <h2 class="wow fadeInRight" data-wow-delay="0.4s">분리수거</h2>
+              <h2 class="wow fadeInRight" data-wow-delay="0.4s">분리수거,<br/> 맡겨보세요</h2>
               <h4 class="wow fadeInRight" data-wow-delay="0.6s">편하고 정확한 분리수거로 지구를 지킬 수 있어요.</h4>
-              <a href="friends.html" class="btn btn-lg btn-common btn-effect wow fadeInRight"
+              <a href="/subscribe/main" class="btn btn-lg btn-common btn-effect wow fadeInRight"
                 data-wow-delay="0.9s">구독하기</a>
-              <a href="buddy.html" class="btn btn-lg btn-border wow fadeInRight" data-wow-delay="1.2s">버디 지원하기</a>
+              <a href="/form/register" class="btn btn-lg btn-border wow fadeInRight" data-wow-delay="1.2s">버디 지원하기</a>
           </div>
         </div>
       </div>
@@ -91,7 +91,7 @@
             <h4 style="font-size: 500%; font-family: 맑은고딕; font-weight: bold;">For Local</h4>
             <p style="font-size:180%; line-height: 30px; color:gray;">"지역 상생을 추구합니다"</p><br><br><br>
             <h4 style="font-size:180%; line-height: 10px;">#비대면</h4>
-            <p style="font-size:120%; line-height: 30px;">코로나19 때문에 외부인과의 접촉이 걱정되셨나요?<br> 버디를 부르고 문앞에 놓기만 하세요.</p>
+            <p style="font-size:110%; line-height: 30px;">코로나19 때문에 외부인과의 접촉이 걱정되셨나요?<br> 버디를 부르고 문앞에 놓기만 하세요.</p>
           </div>
           <div class="col-md">
           </div>
@@ -149,7 +149,7 @@
               <i class="lni-users"></i>
             </div>
             <div class="fact-count">
-              <h3><span class="counter">105</span></h3>
+              <h3><span class="sum"><c:out value="${userTotal }" /></span>명</h3>
               <h4>현재 구독 회원수</h4>
             </div>
           </div>
@@ -160,7 +160,7 @@
               <i class="lni-write"></i>
             </div>
             <div class="fact-count">
-              <h3><span class="counter">63</span></h3>
+              <h3><span class="counter"><c:out value="${pageMaker.total }" /></span></h3>
               <h4>현재 작성된 리뷰수</h4>
             </div>
           </div>
@@ -171,7 +171,7 @@
               <i class="lni-emoji-smile"></i>
             </div>
             <div class="fact-count">
-              <h3><span class="counter">160</span></h3>
+              <h3><span class="counter"><c:out value="${buddyTotal }" /></span>명</h3>
               <h4>함께하는 버디 직원수</h4>
             </div>
           </div>
@@ -182,7 +182,7 @@
               <i class="lni-heart"></i>
             </div>
             <div class="fact-count">
-              <h3><span class="counter">98</span>%</h3>
+              <h3><span class="counter"><c:out value="${starSum * 20 }" /></span>%</h3>
               <h4>고객 만족도</h4>
             </div>
           </div>
@@ -218,109 +218,14 @@
               </div>
             </div>
             </c:forEach>
-            
-            <!--  
-            <div class="item">
-              <div class="testimonial-item">
-                <div class="author">
-                  <div class="author-info">
-                    <h2>김덕배</h2>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                  </div>
-                </div>
-                <div class="content-inner">
-                  <p class="description">유튜브 프리미엄 같은 녀석...</p>
-                </div>
-              </div>
-            </div>            
-            <div class="item">
-              <div class="testimonial-item">
-                <div class="author">
-                  <div class="img-thumb">
-                  </div>
-                  <div class="author-info">
-                    <h2>삼콩</h2>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                  </div>
-                </div>
-                <div class="content-inner">
-                  <p class="description">있다 없으니깐... 한달만 쓰고 취소 했었는데 다시 구독해버렸습니당 ㅜㅜ</p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="testimonial-item">
-                <div class="author">
-                  <div class="img-thumb">
-                  </div>
-                  <div class="author-info">
-                    <h2>쓰레기가 너무 많아</h2>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star"></i></span>
-                    <span><i class="lni-star"></i></span>
-                  </div>
-                </div>
-                <div class="content-inner">
-                  <p class="description">집에 쓰레기가 너무 많아서 매일매일 분리수거가 필요했는데 이거 구독하고 너무 편해요 ㅋㅋ 강추 </p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="testimonial-item">
-                <div class="author">
-                  <div class="img-thumb">
-                  </div>
-                  <div class="author-info">
-                    <h2>궝진몽</h2>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star"></i></span>
-                  </div>
-                </div>
-                <div class="content-inner">
-                  <p class="description">커피 한잔 값으로 편리함뿐만 아니라 사회적인 기여까지 할 수 있다는게 놀랍네요. 단순히 상업적인것이 목표가 아닌것에 박수치고 갑니다 짝짝!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="testimonial-item">
-                <div class="author">
-                  <div class="img-thumb">
-                  </div>
-                  <div class="author-info">
-                    <h2>비트컴프</h2>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star-filled"></i></span>
-                    <span><i class="lni-star"></i></span>
-                  </div>
-                </div>
-                <div class="content-inner">
-                  <p class="description">사람들이 분리수거를 안해서 스트레스였는데 단 돈 3,900원으로 개꿀 ㅋㅋ 빨리쓰셈</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      -->
+         
     </div>
   </section>
   <!-- Testimonial Section End -->
+
+	<!-- PC 카카오톡 상담 버튼 -->
+	<%@ include file="/WEB-INF/views/includes/kakaochat.jsp"%>
+
 
   <!-- Footer Section Start -->
   <%@ include file="/WEB-INF/views/includes/footer.jsp"%>

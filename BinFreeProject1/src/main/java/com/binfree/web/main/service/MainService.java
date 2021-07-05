@@ -7,8 +7,6 @@ import com.binfree.web.review.domain.ReviewVO;
 public interface MainService {
 
 	public List<ReviewVO> getReviewList();
-	/*
-	 * public List<ReviewVO> getReviewList(int a);
-	 */	
+	
 	
 }

@@ -25,7 +25,5 @@ public class UsersVO {
 	private boolean enabled;
 	private String auth;
 
-
-
 	
 }

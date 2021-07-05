@@ -28,22 +28,6 @@
       <result property="checkbox" column="checkbox" />
    </resultMap>
 
-	<resultMap type="com.binfree.web.user.domain.UsersVO" id="usersMap2">
-      <id property="id" column="id" />
-      <result property="id" column="id" />
-      <result property="email" column="email" />
-      <result property="password" column="password" />
-      <result property="name" column="name" />
-      <result property="phone" column="phone" />
-      <result property="zipCode" column="zipCode" />
-      <result property="loc" column="loc" />
-      <result property="inputLoc" column="inputLoc" />
-      <result property="subItem" column="subItem" />
-      <result property="subStart" column="subStart" />
-      <result property="subEnd" column="subEnd" />
-   </resultMap>
-
-
    <select id="read" resultMap="usersMap">
 	   	<![CDATA[
 		   SELECT user.id, 
@@ -101,12 +85,19 @@
 		]]>
 	</select>
 	
+	<select id="setSubInfo" parameterType="com.binfree.web.user.domain.UsersVO" resultType="com.binfree.web.user.domain.UsersVO">
+      <![CDATA[
+         UPDATE USERS 
+         SET subItem = #{subItem}, subName = #{subName}, subPhone = #{subPhone}, zipCode = #{zipCode}, loc = #{loc}, inputLoc = #{inputLoc}, subStart = NOW(), subEnd = NOW()	
+         WHERE email = #{email}
+      ]]>
+   </select>
+	
 	<select id="byeUser" parameterType="String" resultType="String">
 		<![CDATA[
 			DELETE FROM USERS 
 			WHERE email = #{email}
 		]]>
 	</select>
-	
 
 </mapper>

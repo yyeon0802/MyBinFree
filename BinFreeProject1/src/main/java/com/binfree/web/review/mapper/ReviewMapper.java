@@ -2,6 +2,8 @@ package com.binfree.web.review.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.binfree.web.review.domain.Criteria;
 import com.binfree.web.review.domain.ReviewVO;
 
@@ -24,5 +26,5 @@ public interface ReviewMapper {
 
 	public int reviewUpdate(ReviewVO name);
 	
-
+	public int getStarNum(@Param("star") int star);
 }

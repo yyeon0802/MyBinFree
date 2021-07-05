@@ -14,16 +14,16 @@
 	</select>
 	
 	<select id="getTotal" resultType="int">
-		select count(*) from review
+		select count(*) from review 
 	</select>
 	
 	<select id="getStarTotal" resultType="int">
 		select sum(star) from review
 	</select>
 	
-
-	<!-- <select id="getListWithPaging" resultType="com.binfree.web.review.domain.ReviewVO"> 
-		<![CDATA[ select * from review where id > 0 ]]> </select> -->
+	<select id="getStarNum" resultType="int">
+		select count(if(star=#{star}, star, null))from review
+	</select>
 
 	<select id="get"
 		resultType="com.binfree.web.review.domain.ReviewVO">
@@ -48,6 +48,10 @@
 		where id = #{id}
 	</update>
 
-	
+	<select id="">
+	<![CDATA[
+		
+	]]>
+	</select>
 
 </mapper>

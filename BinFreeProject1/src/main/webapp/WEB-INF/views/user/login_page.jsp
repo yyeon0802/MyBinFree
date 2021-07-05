@@ -3,6 +3,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 	
 
+<%
+
+ String success = (String) request.getAttribute("success");
+
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 
@@ -27,7 +33,24 @@
   <link rel="stylesheet" href="/resources/css/menu_sideslide.css">
   <link rel="stylesheet" href="/resources/css/main.css">
   <link rel="stylesheet" href="/resources/css/responsive.css">
- 
+  
+  <script>
+  	/* function login() {
+  		var id = $('#email').val();
+  		var pw = $('#password').val();
+  		$.ajax({
+  			type: 'post',
+  			url: '/user/login',
+  			dataType: 'json',
+  			data: {'email' : id, 'password' : pw},
+  			success: function() {
+  				alert("로그인성공");
+  			},
+  			error: function(e){}
+  		});
+  	} */
+  </script>
+
 </head>
 
 <body>
@@ -77,9 +100,8 @@
 													style="color: black;">|</a> <a href="#" col
 													style="color: black;">비밀번호 찾기</a>
 											</div>
-											<button type="button"
-												class="btn btn-common btn-effect btn-kakao" 
-												onclick="window.open('https://kauth.kakao.com/oauth/authorize?client_id=02b776f7245b5bf08b452bea56efb7a4&redirect_uri=http://localhost:9091/user/kakaologin&response_type=code')">
+											<button type="submit"
+												class="btn btn-common btn-effect btn-kakao">
 												<img src="/resources/img/kakao.png" height="21px"
 													width="21px">&nbsp;카카오 로그인
 											</button>
@@ -104,6 +126,21 @@
 
   <!-- Footer Section Start -->
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+    
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	var success = '<%=success%>';
+    	if(success !=  null && success != 'null'){
+    		alert(success);
+    	}
+    })
+    
+    </script>
+    
+    
+    
 </body>
+
 
 </html>

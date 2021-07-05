@@ -12,25 +12,24 @@
 			<div class="row">
 			
 			<div class="col-lg-4 col-md-4 col-xs-12 adminpage">
-			<a href="/admin/bfamily/list">BFamily 관리 페이지</a>
+			<a href="/admin/bfamily/list">BFamily 구독자 관리</a>
 			</div>
 			
 			<div class="col-lg-4 col-md-4 col-xs-12 adminpage" >
-			<a href="/admin/buddy/list" style="color: gray;" >Buddy 관리 페이지</a>
+			<a href="/admin/buddy/list" style="color: gray;" >Buddy 직원 관리</a>
 			</div>
 			
 			<div class="col-lg-4 col-md-4 col-xs-12 adminpage" >
-			<a href="/admin/form/list" style="color: gray;">Buddy 지원자 관리 페이지</a>
+			<a href="/admin/form/list" style="color: gray;">Buddy 지원자 이력서 관리</a>
 			</div>
 			
 			</div>
 			
 			<div class="section-header">
-				<h2 class="section-title">BFamily 관리 페이지</h2>
+				<h2 class="section-title">BFamily 구독자 관리</h2>
 			</div>
 			
 			<div class="row">
-
 
 				<c:forEach items="${bflist}" var="bflist">
 					<div class="col-lg-4 col-md-4 col-xs-12">

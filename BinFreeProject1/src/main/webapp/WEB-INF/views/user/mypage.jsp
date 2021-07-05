@@ -308,37 +308,72 @@ function modify_subInfo() {
 }  
 
 
-function modify_pwd() {
-	 
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	 
-	var password = $('#pwd').val();
-	
-	$.ajax({
-		
-		type: 'post',
-		url:'/user/modify_pwd',
-		beforeSend : function(xhr)
-        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-			xhr.setRequestHeader(header, token);
-        },
-		contentType : "application/json; charset=UTF-8",
-		data : password,
-		dataType: 'text',
-		success: function(){
-			alert("수정되었습니다.");
-			location.replace("/");	
-			console.log("리플레이스??");
 
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
-	 
-		
- }
+function password_check(password) {    
+	   // 특수문자 체크 정규식      
+	    var regex= /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+	    if(!regex.test(password)){
+	         return false;
+	    } else {
+	       return true;
+	    }
+	}
+
+
+
+	function modify_pwd() {
+	    
+	   var token = $("meta[name='_csrf']").attr("content");
+	   var header = $("meta[name='_csrf_header']").attr("content");
+	    
+	   var password = $('#pwd').val();
+	   
+	   if( password == '' || password == 'undefined') {
+	      alert("공백은 비밀번호로 사용하실 수 없습니다.")
+	      return;
+	   }
+	   
+	   if(!password_check(password)){
+
+	      alert("수정하실 수 없습니다. 비밀번호를 확인하세요.");
+	      
+	      $("button[name=submitPwd]").blur(function(){
+	      
+	         /* var password = $('#pwd').val(); */
+	         
+	          if(! password_check(password) ) {
+	                 $("#error-password").text('영문+숫자+특수기호 8자리 이상으로 구성하여야 합니다.');
+	               /*  $(this).focus(); */               
+	              }else {
+	               $("#error-password").text('');
+	              }
+	      });
+	   } else {
+	      
+	      $.ajax({
+	         
+	         type: 'post',
+	         url:'/user/modify_pwd',
+	         beforeSend : function(xhr)
+	           {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+	            xhr.setRequestHeader(header, token);
+	           },
+	         contentType : "application/json; charset=UTF-8",
+	         data : password,
+	         dataType: 'text',
+	         success: function(){
+	            alert("비밀번호가 수정되었습니다.");
+	            window.location.reload();
+	         },
+	         error:function(e){
+	            console.log(e);
+	         }
+	      });
+	   }
+	   
+	      
+	 }
+
 
 
  function bye_user() {
@@ -380,151 +415,215 @@ function modify_pwd() {
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!-- Header Section End -->
 
-  <!-- Mypage Section Start -->    
-  <section id="tabs">
-    <div class="container">
-      <h6 class="section-title h1">&nbsp</h6>
-      <div class="row">
-        <div class="col-xs-12 col-md-12">
-          <!-- col-md-12 추가 -->
-          <nav>
-            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-myinfo" role="tab"
-                aria-controls="nav-home" aria-selected="true">내정보</a>
-              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-subinfo" role="tab"
-                aria-controls="nav-profile" aria-selected="false">구독 정보</a>
-            </div>
-          </nav>
-          <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-myinfo" role="tabpanel" aria-labelledby="nav-home-tab">
-              <div class="row">
-              <c:choose>
-              	<c:when test="${userInfo.password == null}">
-              		<div class="container">
-				        <div class="row">          
-				          <div class="col-md-12">
-				            <!--matching image div-->
-				            <div class="p-3 py-5" style="margin-top: 100px;">
-				              <div class="mt-5 text-center">
-				                <img src="/resources/img/portfolio/nosub.png" alt="" />
-				              </div>
-				              <div class="mt-5 text-center">
-				                <p><br/></p>
-				                <h2 class="section-title" style="font-size: 20px;">카카오 로그인 중입니다.</h2>                
-				              </div>
-				            </div>
-				          </div>
-				        </div>
-				      </div> 
-				  </c:when>
-              	<c:otherwise>
-                <!-- myinfo Start -->
-                <div class="col-md-7 border-right" id="myinfo">
-                  <!--border-right-->
-                  <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <h6 class="text-right">내 정보</h6>
-                    </div>
-                    <div class="row mt-2">
-                      <div class="col-md-12"><label class="labels">이름</label><input type="text" class="form-control"
-                          value="${userInfo.name }" readonly="true"/></div>
-                      <div class="col-md-12"><label class="labels">전화번호</label><input type="text" class="form-control"
-                          id="phone" value="${userInfo.phone }"/></div>
-                      <div class="col-md-12"><label class="labels">이메일 ID</label><input type="text" class="form-control"
-                          id="email" value="${userInfo.email}" readonly="true"/></div>
-                    </div>
-                    <div class="mt-5 text-center">
-                      <button class="btn btn-common btn-effect" id="userinfo_submit" onclick="modify_userInfo()">내 정보 수정</button>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <button class="btn btn-common btn-effect" id="submit" onclick="bye_user()"> 회원 탈퇴 </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <h6 class="text-right">비밀번호</h6>
-                    </div>
-                    <div class="row mt-2">
-                      <div class="col-md-12"><label class="labels">현재 비밀번호</label><input type="password"
-                          class="form-control" value="${userInfo.password }" readonly="true" /></div>
-                    </div>
-                    <div class="row mt-2">
-                      <div class="col-md-12"><label class="labels">수정할 비밀번호</label><input type="button" id="sbutton" value="보이기" class="button" />
-                      <input type="password" class="form-control" id="pwd" value="" placeholder="현재 비밀번호는 암호화 되어 있습니다."></div>
-                    </div>
-                  </div>
-                  <div class="mt-2 text-center">
-                    <button class="btn btn-common btn-effect" id="submit_pwd" onclick="modify_pwd()" >비밀번호 수정</button>                    
-                  </div>
-                </div>
-                </c:otherwise>
-			</c:choose>
-              </div> <!-- div class="row"end -->
-            </div> <!-- div class="tab-pane fade show active" end  -->
-            <!-- myinfo End -->
-           
-          <!-- subinfo Start -->
-            <div class="tab-pane fade" id="nav-subinfo" role="tabpanel" aria-labelledby="nav-profile-tab">
-              <div class="row">
-              <c:choose>
-              	<c:when test="${userInfo.zipCode == null}">
-              		<div class="container">
-				        <div class="row">          
-				          <div class="col-md-12">
-				            <!--matching image div-->
-				            <div class="p-3 py-5" style="margin-top: 100px;">
-				              <div class="mt-5 text-center">
-				                <img src="/resources/img/portfolio/nosub.png" alt="" />
-				              </div>
-				              <div class="mt-5 text-center">
-				                <p><br/></p>
-				                <h2 class="section-title" style="font-size: 20px;">구독중인 binFree 서비스가 없습니다.</h2>                
-				              </div>
-				            </div>
-				          </div>
-				        </div>
-				      </div> 
-				  </c:when>
-                <c:otherwise>
-                <div class="col-md-7 border-right" id="subinfo">
-                  <!--border-right-->
-                  <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <h6 class="text-right">구독 정보</h6>
-                    </div>
-                    <div class="row mt-2">
-                      <div class="col-md-8"><label class="labels">구독 상품</label>
-                      <input type="text" class="form-control" value="${userInfo.subItem }" disabled /></div>
-                      <div class="col-md-6"><label class="labels">구독 시작</label>
-                      <input type="text" class="form-control" value="${userInfo.subStart}" readonly="true"/></div>
-                      <div class="col-md-6"><label class="labels">구독 종료</label>
-                      <input type="text" class="form-control" value="${userInfo.subEnd }" readonly="true"/></div>
-                      <div class="col-md-6"><label class="labels">구독자</label><input id="sub_name" type="text" class="form-control"
-                          value="${userInfo.subName }"/></div>
-                      <div class="col-md-6"><label class="labels">구독자 연락처</label><input id="sub_phone" type="text" class="form-control"
-                           value="${userInfo.subPhone }"/></div>
-                    </div>
-                    <br><br>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <h6 class="text-right">구독 주소</h6>
-                    </div>
-                    <div class="row mt-2">
-                      <div class="col-md-6"><label class="labels">우편번호</label><input type="text" class="form-control"
-                        id="zipCode" value="${userInfo.zipCode }" readonly="true"/></div>
-                      <div class="col-md-6"><button class="btn btn-common btn-effect btn-loc" onclick="findAddress()" id="submit" style="margin-top: 29px;">
-                       	 주소 찾기</button></div>
-                      <div class="col-md-12"><label class="labels">기본 주소</label><input type="text" class="form-control"
-                         id="loc" value="${userInfo.loc }" readonly="true" /></div>
-                      <div class="col-md-12"><label class="labels">상세 주소</label><input type="text" class="form-control"
-                       id="inputLoc" value="${userInfo.inputLoc }"/></div>
-                    </div>
-                    <div class="mt-5 text-center">
-                      <button class="btn btn-common btn-effect" id="sub_submit" onclick="modify_subInfo()">구독 정보 수정</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <button type="button" class="btn btn-common" data-toggle="modal" data-target="#form">구독 리뷰 작성</button>
-                    </div>
-                  </div>
-                </div>
+	<!-- Mypage Section Start -->
+	<section id="tabs">
+		<div class="container">
+			<h6 class="section-title h1">&nbsp</h6>
+			<div class="row">
+				<div class="col-xs-12 col-md-12">
+					<!-- col-md-12 추가 -->
+					<nav>
+						<div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+							<a class="nav-item nav-link active" id="nav-home-tab"
+								data-toggle="tab" href="#nav-myinfo" role="tab"
+								aria-controls="nav-home" aria-selected="true">내정보</a> <a
+								class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+								href="#nav-subinfo" role="tab" aria-controls="nav-profile"
+								aria-selected="false">구독 정보</a>
+						</div>
+					</nav>
+					<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+						<div class="tab-pane fade show active" id="nav-myinfo"
+							role="tabpanel" aria-labelledby="nav-home-tab">
+							<div class="row">
+								<c:choose>
+									<c:when test="${userInfo.password == null}">
+										<div class="container">
+											<div class="row">
+												<div class="col-md-12">
+													<!--matching image div-->
+													<div class="p-3 py-5" style="margin-top: 100px;">
+														<div class="mt-5 text-center">
+															<img src="/resources/img/portfolio/nosub.png" alt="" />
+														</div>
+														<div class="mt-5 text-center">
+															<p>
+																<br />
+															</p>
+															<h2 class="section-title" style="font-size: 20px;">카카오
+																로그인 중입니다.</h2>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<!-- myinfo Start -->
+										<div class="col-md-7 border-right" id="myinfo">
+											<!--border-right-->
+											<div class="p-3 py-5">
+												<div
+													class="d-flex justify-content-between align-items-center mb-3">
+													<h6 class="text-right">내 정보</h6>
+												</div>
+												<div class="row mt-2">
+													<div class="col-md-12">
+														<label class="labels">이름</label><input type="text"
+															class="form-control" value="${userInfo.name }" id="name"
+															readonly="true" />
+													</div>
+													<div class="col-md-12">
+														<label class="labels">전화번호</label><input type="text"
+															class="form-control" id="phone"
+															value="${userInfo.phone }" />
+													</div>
+													<div class="col-md-12">
+														<label class="labels">이메일 ID</label><input type="text"
+															class="form-control" id="email" value="${userInfo.email}"
+															readonly="true" />
+													</div>
+												</div>
+												<div class="mt-5 text-center">
+													<button class="btn btn-common btn-effect"
+														id="userinfo_submit" onclick="modify_userInfo()">내
+														정보 수정</button>
+													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													<button class="btn btn-common btn-effect" id="submit"
+														onclick="bye_user()">회원 탈퇴</button>
+												</div>
+											</div>
+										</div>
+										 <div class="col-md-4">
+				                  <div class="p-3 py-5">
+				                    <div class="d-flex justify-content-between align-items-center mb-3">
+				                      <h6 class="text-right">비밀번호</h6>
+				                    </div>
+				                    <div class="row mt-2">
+				                      <div class="col-md-12"><label class="labels">현재 비밀번호</label><input type="password"
+				                          class="form-control" value="${userInfo.password }" readonly="true" /></div>
+				                    </div>
+				                    <div class="row mt-2">
+				                      <div class="col-md-12"><label class="labels">수정할 비밀번호</label><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				                      <input type="button" id="sbutton" value="보이기" class="btn btn-effect" 
+				                      style="margin-bottom: 10px; background-color: #199DD5; position: relative; z-index: 1; padding: 5px 5px; border-radius: 15px;" color="white";/>
+				                      <input type="password" class="form-control" id="pwd" name="password" value="" placeholder="현재 비밀번호는 암호화 되어 있습니다."></div>
+				                      <div id="error-password" class=" result-check" style="color: red; padding-left: 20px; padding-bottom: 7px"></div>
+				                    </div>
+				                  </div>
+				                  <div class="mt-2 text-center">
+				                    <button class="btn btn-common btn-effect" id="submit_pwd" name="submitPwd" onclick="modify_pwd()">비밀번호 수정</button>                    
+				                  </div>
+				                </div>
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<!-- div class="row"end -->
+						</div>
+						<!-- div class="tab-pane fade show active" end  -->
+						<!-- myinfo End -->
+
+						<!-- subinfo Start -->
+						<div class="tab-pane fade" id="nav-subinfo" role="tabpanel"
+							aria-labelledby="nav-profile-tab">
+							<div class="row">
+								<c:choose>
+									<c:when test="${userInfo.zipCode == null}">
+										<div class="container">
+											<div class="row">
+												<div class="col-md-12">
+												
+													<!--matching image div-->
+													<div class="p-3 py-5" style="margin-top: 100px;">
+														<div class="mt-5 text-center">
+															<img src="/resources/img/portfolio/nosub.png" alt="" />
+														</div>
+														<div class="mt-5 text-center">
+															<p>
+																<br />
+															</p>
+															<h2 class="section-title" style="font-size: 20px;">구독중인
+																binFree 서비스가 없습니다.</h2>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="col-md-7 border-right" id="subinfo">
+											<!--border-right-->
+											<div class="p-3 py-5">
+												<div
+													class="d-flex justify-content-between align-items-center mb-3">
+													<h6 class="text-right">구독 정보</h6>
+												</div>
+												<div class="row mt-2">
+													<div class="col-md-8">
+														<label class="labels">구독 상품</label> <input type="text"
+															class="form-control" value="${userInfo.subItem }" id="subItem"
+															disabled />
+													</div>
+													<div class="col-md-6">
+														<label class="labels">구독 시작</label> <input type="text"
+															class="form-control" value="${userInfo.subStart}"
+															readonly="true" />
+													</div>
+													<div class="col-md-6">
+														<label class="labels">구독 종료</label> <input type="text"
+															class="form-control" value="${userInfo.subEnd }"
+															readonly="true" />
+													</div>
+													<div class="col-md-6">
+														<label class="labels">구독자</label><input id="sub_name"
+															type="text" class="form-control"
+															value="${userInfo.subName }" />
+													</div>
+													<div class="col-md-6">
+														<label class="labels">구독자 연락처</label><input id="sub_phone"
+															type="text" class="form-control"
+															value="${userInfo.subPhone }" />
+													</div>
+												</div>
+												<br> <br>
+												<div
+													class="d-flex justify-content-between align-items-center mb-3">
+													<h6 class="text-right">구독 주소</h6>
+												</div>
+												<div class="row mt-2">
+													<div class="col-md-6">
+														<label class="labels">우편번호</label><input type="text"
+															class="form-control" id="zipCode"
+															value="${userInfo.zipCode }" readonly="true" />
+													</div>
+													<div class="col-md-6">
+														<button class="btn btn-common btn-effect btn-loc"
+															onclick="findAddress()" id="submit"
+															style="margin-top: 29px;">주소 찾기</button>
+													</div>
+													<div class="col-md-12">
+														<label class="labels">기본 주소</label><input type="text"
+															class="form-control" id="loc" value="${userInfo.loc }"
+															readonly="true" />
+													</div>
+													<div class="col-md-12">
+														<label class="labels">상세 주소</label><input type="text"
+															class="form-control" id="inputLoc"
+															value="${userInfo.inputLoc }" />
+													</div>
+												</div>
+												<div class="mt-5 text-center">
+													<button class="btn btn-common btn-effect" id="sub_submit"
+														onclick="modify_subInfo()">구독 정보 수정</button>
+													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													<button type="button" class="btn btn-common"
+														data-toggle="modal" data-target="#form">구독 리뷰 작성</button>
+												</div>
+											</div>
+											<%-- </form:form> --%>
+										</div>
+
 										<div class="modal fade" id="form" tabindex="-1" role="dialog"
 											aria-labelledby="exampleModalLabel" aria-hidden="true">
 											<div class="modal-dialog modal-dialog-centered"
@@ -540,10 +639,6 @@ function modify_pwd() {
 															<p style="font-size: 25px; padding: 20px;">서비스에
 																만족하셨나요?</p>
 															<!-- 리뷰 작성 폼 action -->
-															<form action="/review/insert" method="post" id="insert-form">
-																<input type="hidden" id="email" value="${email}" />
-																<input type="hidden" id="userName" value="${name}" /> 
-																<input type="hidden" id="subItem" value="${subItem }" /> 
 																<input type="hidden" id="star" />
 																<div class="rating">
 																	<input type="radio" name="star" value="5" id="5">
@@ -558,10 +653,10 @@ function modify_pwd() {
 																	<label for="1">☆</label>
 																</div>
 																<div class="comment-area">
-																<textarea class="form-control" id="contents" name="contents" placeholder="리뷰를 작성해주세요." rows="4"></textarea>
+																<textarea class="form-control" id="contents" ame="contents" placeholder="리뷰를 작성해주세요." rows="4"></textarea>
 																</div>
 																<div class="text-center mt-4">
-																	<button name="subBtn" type="submit" class="btn btn-success send px-4">
+																	<button name="subBtn" type="submit" class="btn btn-success send px-4" onclick="insert();">
 																		작성 완료 
 																		<i class="fa fa-long-arrow-right ml-1"></i>
 																	</button>
@@ -570,41 +665,41 @@ function modify_pwd() {
 																		<i class="fa fa-long-arrow-right ml-1"></i>
 																	</button>
 																</div>
-															</form>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-										
 
 										<!-- mybuddyinfo Start -->
-										<div class="col-md-4">
-											<div class="p-3 py-5">
-												<div
-													class="d-flex justify-content-between align-items-center mb-3">
-													<h6 class="text-right">나의 Buddy</h6>
-												</div>
-												<div class="d-flex flex-row mt-3 exp-container">
-													<img src="img/buddy/human.jpeg" width="350" height="460">
-												</div>
-												<div class="d-flex flex-row mt-3 exp-container">
-													<div class="work-experience ml-1">
-														<span class="font-weight-bold" style="font-size: larger;">김홍홍</span><span>Buddy</span><span
-															class="d-block text-black-50 labels">010-4321-8765</span><span
-															class="d-block text-black-50 labels">March,2017 -
-															May 2020</span>
-													</div>
-												</div>
-												<hr>
-											</div>
-										</div>
-										<!-- mybuddyinfo End -->
-						</c:otherwise>
-					</c:choose>
-					</div> <!-- div class="row" end  -->
-				</div>	<!-- div class="tab-pane fade" end -->
-			<!-- subinfo End -->
+                              <div class="col-md-4">
+                                 <div class="p-3 py-5">
+                                    <div
+                                       class="d-flex justify-content-between align-items-center mb-3">
+                                       <h6 class="text-right">나의 Buddy</h6>
+                                    </div>
+                                    <div class="d-flex flex-row mt-3 exp-container">
+                                       <img src="/resources/img/buddy/<c:out value="${myBuddyInfo.pic }" />" width="350" height="460">
+                                    </div>
+                                    <div class="d-flex flex-row mt-3 exp-container">
+                                       <div class="work-experience ml-1">
+                                          <span class="font-weight-bold" style="font-size: larger;"><c:out value="${myBuddyInfo.id }"></c:out>
+                                          <c:out value="${myBuddyInfo.name }"></c:out></span><span>Buddy</span><span
+                                             class="d-block text-black-50 labels"><c:out value="${myBuddyInfo.phone }"/></span>
+                                          <!-- <span class="d-block text-black-50 labels">March,2017 -   May 2020</span> -->
+                                       </div>
+                                    </div>
+                                    <hr>
+                                 </div>
+                              </div>
+                           <!-- mybuddyinfo End -->
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<!-- div class="row" end  -->
+						</div>
+						<!-- div class="tab-pane fade" end -->
+						<!-- subinfo End -->
 					</div>
 				</div>
 			</div>
@@ -616,12 +711,9 @@ function modify_pwd() {
 
 	<!-- Footer Section Start -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
-
-	<script type="text/javascript" src="/resources/js/review.js"></script>
-	<script>
 	
-		
-	
+	<script type="text/javascript">
+	/* 리뷰 작성 */
 	function insert() {
 		$('input[name="star"]').each(function() {
 	        if($(this).prop('checked')) {
@@ -635,7 +727,7 @@ function modify_pwd() {
 		var email = $('#email').val();
 		var star = $('#star').val();
 		var contents = $('#contents').val();
-		var userName = $('#userName').val();
+		var userName = $('#name').val();
 		var subItem = $('#subItem').val();
 		console.log(contents);
 		$.ajax({
@@ -650,10 +742,8 @@ function modify_pwd() {
 			success: function(data){
 				alert("리뷰 등록이 완료되었습니다!");
 				$('#modal').modal('hide');
-				window.location.href='/review/subscribe';
-			}error:function(e){
-				console.log(e);
-			}	
+				window.location.href='/review/list';
+			}
 		});
 	}
 	

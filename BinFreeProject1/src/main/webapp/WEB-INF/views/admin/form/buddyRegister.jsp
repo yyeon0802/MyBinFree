@@ -301,7 +301,7 @@ $(document).ready(function(){
 	$("button[type='submit']").on("click", function(e){
 		// e.preventDefault();
 		console.log("submit clicked");
-		alert("수정되었습니다.");
+		alert("Buddy 채용이 완료되었습니다.");
 	});
 	
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");

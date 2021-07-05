@@ -32,6 +32,9 @@
 	<context:component-scan base-package="com.binfree.web.bfamily.controller" />
 	<context:component-scan base-package="com.binfree.web.form.controller" />
 	<context:component-scan base-package="com.binfree.web.main.controller" />
+	<context:component-scan base-package="com.binfree.web.upload.controller" />
+   	<context:component-scan base-package="com.binfree.web.subscribe.controller" />
+	
 
 	<context:component-scan base-package="com.binfree.web.user.service"></context:component-scan>
 	<context:component-scan base-package="com.binfree.web.review.service"></context:component-scan>
@@ -39,6 +42,8 @@
 	<context:component-scan base-package="com.binfree.web.bfamily.service"></context:component-scan>
 	<context:component-scan base-package="com.binfree.web.form.service"></context:component-scan>
 	<context:component-scan base-package="com.binfree.web.main.service"></context:component-scan>
+	<context:component-scan base-package="com.binfree.web.subscribe.service"></context:component-scan>
+	
 		
 	<context:component-scan base-package="com.binfree.web.user.mapper"></context:component-scan>
 	<context:component-scan base-package="com.binfree.web.review.mapper"></context:component-scan>
@@ -46,6 +51,7 @@
 	<context:component-scan base-package="com.binfree.web.bfmaily.mapper"></context:component-scan>
 	<context:component-scan base-package="com.binfree.web.form.mapper"></context:component-scan>
 	<context:component-scan base-package="com.binfree.web.main.mapper"></context:component-scan>
+    <context:component-scan base-package="com.binfree.web.subscribe.mapper"></context:component-scan>
 		
 		
 

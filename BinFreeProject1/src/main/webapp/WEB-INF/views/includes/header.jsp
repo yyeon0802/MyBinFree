@@ -35,9 +35,15 @@
   <link rel="stylesheet" href="/resources/css/main.css">
   <link rel="stylesheet" href="/resources/css/responsive.css">
   <link rel="stylesheet" href="/resources/css/adminpage.css">
+  <link rel="stylesheet" href="/resources/css/kakao.css">
 
   <script src="https://code.jquery.com/jquery-latest.js"></script>
   <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+ <!-- <script>
+    componentDidMount(){
+      Kakao.init('2a351a8d6b54e936968fb3673fae2a42');
+    }
+  </script>  --> 
 
 </head>
 
@@ -55,16 +61,16 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto w-100 justify-content-end">
             <li class="nav-item">
-              <a class="nav-link page-scroll" href="/review/subscribe">구독</a>
+              <a class="nav-link page-scroll" href="/subscribe/main">구독</a>
             </li>
             <li class="nav-item">
               <a class="nav-link page-scroll" href="/form/register">구인</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link page-scroll" href="/service">고객센터</a>
+              <a class="nav-link page-scroll" href="/review/list">리뷰</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link page-scroll" href="/review/list">리뷰</a>
+              <a class="nav-link page-scroll" href="/service">고객센터</a>
             </li>
             
             <li class="nav-item">
@@ -78,10 +84,13 @@
             <sec:authorize access="hasRole('ROLE_MEMBER')">
             	<li class="nav-item">
                		<a class="nav-link page-scroll" href="/user/mypage">
-               		<sec:authentication property="principal.name"/>님 마이페이지</a>
+               		<strong><sec:authentication property="principal.name"/></strong>님 마이페이지</a>
+               		
+               		<!-- 수정할 것 -->
                		<sec:authentication property="principal.email" var="email" />
 					<sec:authentication property="principal.name" var="userName" />
 					<sec:authentication property="principal.subItem" var="subItem" />
+					<sec:authentication property="principal.phone" var="phone" />
              	</li>
              	
              	<li>
@@ -96,7 +105,7 @@
             <sec:authorize access="hasRole('ROLE_ADMIN')">
             <li class="nav-item">
               <a class="nav-link page-scroll" href="/admin/bfamily/list">
-              <sec:authentication property="principal.name"/> 페이지</a>
+            	<strong><sec:authentication property="principal.name"/></strong>님 페이지</a>
             </li>
            <li>
              	<a class="nav-link page-scroll" onclick="document.getElementById('logout').submit();">로그아웃</a>
