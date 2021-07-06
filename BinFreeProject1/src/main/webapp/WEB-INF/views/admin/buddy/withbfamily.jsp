@@ -5,20 +5,14 @@
 
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
-	<!-- <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-	<link rel="stylesheet" href="/resources/css/style2.css">
- -->
-
- <!-- Contact Section Start -->
+<!-- Contact Section Start -->
   <section id="contact" class="section" style="margin-top: 40px;">
     <div class="contact-form">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">담당 BFamily 현황</h2>
-          <p class="section-subtitle">만 15세 이상이라면 누구나 지원 가능합니다<br> 당신의 연락을 기다리고 있을게요</p>
+          <p class="section-subtitle"><br></p>
         </div>
         <div class="row">
           <div class="col-lg-12 col-md-12 col-xs-12">
@@ -48,20 +42,11 @@
                           </tr>
                         </c:forEach>  
                       </tbody>  
-                  </table>  
-              </div>  
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-    
-    <!-- paging start -->
-         <div class="row">
-            <div class="col-lg-4 col-md-4"></div>
-            <div class="col-lg-8 col-md-8 col-xs-12">
-               <div class="paging">
-                  <ul class="pagination">
+                  </table>
+		    <!-- paging start -->
+                  <br/><br/>
+                  <div class="paging">
+                  <ul class="pagination" style="justify-content: center;">
                      <c:if test="${pageMaker.prev}">
                         <li class="paginate_button previous"><a
                            href="${pageMaker.startPage -1}">◁ 이전</a></li>
@@ -79,23 +64,32 @@
                         <li class="paginate_button next"><a href="${pageMaker.endPage +1 }">다음 ▷</a></li>
                      </c:if>
                   </ul>
-               </div>
-               <form id="actionForm" action="/admin/buddy/withbfamily" method="get">
-                  <input type="hidden" name="id" value='<c:out value="${id }"/>'/>
-                  <input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum }"/>'/> 
-                  <input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount }"/>'/>
-               </form>
-               <!-- paging end -->
-    <!-- searchbar start -->
-  <br/><br/><br/><br/><br/><br/>
-    <div class="search-box col-md-7">               
+		             <form id="actionForm" action="/admin/buddy/withbfamily" method="get">
+		                <input type="hidden" name="id" value='<c:out value="${id }"/>'/>
+		                <input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum }"/>'/> 
+		                <input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount }"/>'/>
+		            </form>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+   <!-- paging end -->
+   
+   <!-- searchbar start -->
+  <br/><br/><br/><br/>
+  <div class="row">
+  <div class="col-lg-4 col-md-4"></div>
+            <div class="col-lg-8 col-md-8 col-xs-12">
+    <div class="search-box col-md-6">               
         <form id="searchForm" action="/admin/buddy/withbfamily" method="get">
             <div class="input-group mb-3">
-                <div class="input-group-prepend form-control">
-                <select name="type" style="background: #f5f5f5; border: none;">
-                    <<!-- button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><option value="">--</button> -->
+                <div class="input-group-prepend">
+                <select name="type" style="width: 118px; padding: 15px 15px 15px 25px; border-radius: 30px 0 0 30px; border: none; background: #f5f5f5;">
                     <div class="dropdown-menu" >
-                      <option value="" <c:out value="${pageMaker.cri.type== null?'selected':'' }"/>>&nbsp;&nbsp;&nbsp;</option>
+                      <%-- <option value="" <c:out value="${pageMaker.cri.type == null?'selected':'' }"/>></option> --%>
+                      <option value="ALL" <c:out value="${pageMaker.cri.type eq 'ALL'?'selected':'' }"/>>전체</option>
                       <option value="N" <c:out value="${pageMaker.cri.type eq 'N'?'selected':'' }"/>>구독자</option>
                       <option value="P" <c:out value="${pageMaker.cri.type eq 'P'?'selected':'' }"/>>연락처</option>
                       <option value="L" <c:out value="${pageMaker.cri.type eq 'L'?'selected':'' }"/>>시군구</option>    
@@ -109,14 +103,16 @@
                 <input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum }"/>'/> 
                 <input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount }"/>'/>
                 <div class="input-group-append">
-                    <button class="btn btn-success">Search</button>
+                    <button class="btn btn-common btn-effect">검색</button>
                 </div>
             </div>
         </form>        
     </div>
+  </div>
+  </div>
     <br/><br/><br/><br/><br/><br/>
    <!-- searchbar end  -->   
-    
+   
   </section>
   <!-- Contact Section End -->
 
