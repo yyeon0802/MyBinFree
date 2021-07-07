@@ -87,6 +87,12 @@
 				<when test="type == 'I'.toString()">
 					AND inputLoc like concat('%',#{keyword},'%')
 				</when>
+				<when test="type == 'ALL'.toString()">
+					AND subName like concat('%',#{keyword},'%')
+					OR subPhone like concat('%',#{keyword},'%')
+					OR loc like concat('%',#{keyword},'%')
+					OR inputLoc like concat('%',#{keyword},'%')
+				</when>
 			</choose>
 	</select>
 	
@@ -108,6 +114,12 @@
 				</when>
 				<when test="type == 'I'.toString()">
 					AND inputLoc like concat('%',#{keyword},'%')
+				</when>
+				<when test="type == 'ALL'.toString()">
+					AND subName like concat('%',#{keyword},'%')
+					OR subPhone like concat('%',#{keyword},'%')
+					OR loc like concat('%',#{keyword},'%')
+					OR inputLoc like concat('%',#{keyword},'%')
 				</when>
 			</choose>
 	  	<![CDATA[	 		

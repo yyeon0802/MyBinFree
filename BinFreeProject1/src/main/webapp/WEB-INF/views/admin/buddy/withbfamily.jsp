@@ -5,7 +5,6 @@
 
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
-
 <!-- Contact Section Start -->
   <section id="contact" class="section" style="margin-top: 40px;">
     <div class="contact-form">
@@ -45,7 +44,7 @@
                   </table>
 		    <!-- paging start -->
                   <br/><br/>
-                  <div class="paging">
+                  <%-- <div class="paging">
                   <ul class="pagination" style="justify-content: center;">
                      <c:if test="${pageMaker.prev}">
                         <li class="paginate_button previous"><a
@@ -69,7 +68,7 @@
 		                <input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum }"/>'/> 
 		                <input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount }"/>'/>
 		            </form>
-             </div>
+             </div> --%>
           </div>
         </div>
       </div>
@@ -77,6 +76,32 @@
     </div>
    <!-- paging end -->
    
+  <div class="row">
+            <!-- paging start -->
+            <div class="col-lg-12 col-md-12 col-xs-12">
+               <div class="page_warp">
+                  <div class="page_nation">
+                     <c:if test="${pageMaker.prev}">
+                        <a class="arrow prev" href="${pageMaker.startPage -1}"></a>
+                     </c:if>
+                     <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+                        <a href="${num}" class="${pageMaker.cri.pageNum == num ? "active":""} ">${num}</a>
+                     </c:forEach>
+                     <c:if test="${pageMaker.next}">
+                        <a class="arrow next" href="${pageMaker.endPage +1 }"></a>
+                     </c:if>
+                  </div>
+               </div>
+
+               <form id="actionForm" action="/admin/buddy/withbfamily" method="get">
+               	  <input type="hidden" name="id" value='<c:out value="${id }"/>'/>
+                  <input type="hidden" name="pageNum" value='${pageMaker.cri.pageNum}'> 
+                  <input type="hidden" name="amount" value='${pageMaker.cri.amount}'>
+               </form>
+               <!-- paging end -->
+
+            </div>
+        </div> 
    <!-- searchbar start -->
   <br/><br/><br/><br/>
   <div class="row">
@@ -86,7 +111,7 @@
         <form id="searchForm" action="/admin/buddy/withbfamily" method="get">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                <select name="type" style="width: 118px; padding: 15px 15px 15px 25px; border-radius: 30px 0 0 30px; border: none; background: #f5f5f5;">
+                <select name="type" style="width: 118px; padding: 15px 15px 15px 25px; border-radius: 30px 0 0 30px; border: none; background: #f5f5f5; display: flex; justify-content: center;">
                     <div class="dropdown-menu" >
                       <%-- <option value="" <c:out value="${pageMaker.cri.type == null?'selected':'' }"/>></option> --%>
                       <option value="ALL" <c:out value="${pageMaker.cri.type eq 'ALL'?'selected':'' }"/>>전체</option>
@@ -112,7 +137,7 @@
   </div>
     <br/><br/><br/><br/><br/><br/>
    <!-- searchbar end  -->   
-   
+    
   </section>
   <!-- Contact Section End -->
 
@@ -124,11 +149,10 @@
 
             var actionForm = $("#actionForm");
 
-            $(".paginate_button a").on("click", function(e) {
+            $(".page_nation a").on("click", function(e) {
                      e.preventDefault();
                      console.log("click");
                      actionForm.find("input[name='pageNum']").val($(this).attr("href")); 
-                    
                      actionForm.submit();
                   });
             

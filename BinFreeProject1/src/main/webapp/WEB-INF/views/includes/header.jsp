@@ -36,14 +36,10 @@
   <link rel="stylesheet" href="/resources/css/responsive.css">
   <link rel="stylesheet" href="/resources/css/adminpage.css">
   <link rel="stylesheet" href="/resources/css/kakao.css">
-
+  <link rel="stylesheet" href="/resources/css/pagenation.css">
+	    
   <script src="https://code.jquery.com/jquery-latest.js"></script>
   <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
- <!-- <script>
-    componentDidMount(){
-      Kakao.init('2a351a8d6b54e936968fb3673fae2a42');
-    }
-  </script>  --> 
 
 </head>
 
