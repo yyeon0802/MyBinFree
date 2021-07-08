@@ -42,7 +42,6 @@
                         </c:forEach>  
                       </tbody>  
                   </table>
-		    <!-- paging start -->
                   <br/><br/>
                   <%-- <div class="paging">
                   <ul class="pagination" style="justify-content: center;">
@@ -74,8 +73,8 @@
       </div>
     </div>
     </div>
-   <!-- paging end -->
    
+<!-- paging start -->
   <div class="row">
             <!-- paging start -->
             <div class="col-lg-12 col-md-12 col-xs-12">
@@ -99,7 +98,6 @@
                   <input type="hidden" name="amount" value='${pageMaker.cri.amount}'>
                </form>
                <!-- paging end -->
-
             </div>
         </div> 
    <!-- searchbar start -->
